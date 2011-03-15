@@ -21,11 +21,16 @@
 + (GCCache*)activeCache;
 + (void)setActiveCache:(GCCache*)cache;
 
-+ (void)shutdown;
 + (BOOL)launchGameCenter;
++ (void)shutdown;
 
-- (void)submitScore:(NSNumber*)score toLeaderboard:(NSString*)board;
+- (BOOL)submitScore:(NSNumber*)score toLeaderboard:(NSString*)board;
 - (NSNumber*)scoreForLeaderboard:(NSString*)board;
+- (NSDictionary*)allScores;
+
+- (BOOL)unlockAchievement:(NSString*)achievement;
+- (BOOL)isUnlockedAchievement:(NSString*)achievement;
+- (NSDictionary*)allAchievements;
 
 - (void)synchronize;
 

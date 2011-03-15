@@ -34,6 +34,7 @@ static NSString *kGCDefaultProfileName = @"Default";
 
 static GCCache *activeCache_ = nil;
 static NSArray *leaderboards_ = nil;
+static NSArray *achievements_ = nil;
 
 + (NSArray*)cachedProfiles
 {
@@ -87,7 +88,12 @@ static NSArray *leaderboards_ = nil;
 
 + (void)registerAchievements:(NSArray*)achievements
 {
-    
+    @synchronized(self) {
+        if (achievements_) {
+            [achievements_ release], achievements_ = nil;
+        }
+        achievements_ = [achievements retain];
+    }
 }
 
 + (void)registerLeaderboards:(NSArray*)leaderboards
@@ -111,9 +117,10 @@ static NSArray *leaderboards_ = nil;
     @synchronized(self) {
         [activeCache_ release], activeCache_ = nil;
         [leaderboards_ release], leaderboards_ = nil;
+        [achievements_ release], achievements_ = nil;
     }
 
-    GCLOG(@"GameCenterCache shut down.");
+    GCLOG(@"GameCenterCache was shut down.");
 }
 
 
@@ -216,9 +223,11 @@ static NSArray *leaderboards_ = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:allProfiles forKey:kGCProfilesProperty];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    GCLOG(@"GCCache synchronized.");
 }
 
-- (void)submitScore:(NSNumber*)score toLeaderboard:(NSString*)board
+- (BOOL)submitScore:(NSNumber*)score toLeaderboard:(NSString*)board
 {
     NSMutableDictionary *scoreDict = [NSMutableDictionary dictionaryWithDictionary:[data objectForKey:@"Scores"]];
     NSNumber *currScore = [scoreDict valueForKey:board];    
@@ -228,19 +237,61 @@ static NSArray *leaderboards_ = nil;
                                           thanScore:currScore
                                             inOrder:[leaderboard valueForKey:@"Order"]])
         {
-            return;
+            return NO;
         }
     }
 
     // Rewriting current score
     [scoreDict setValue:score forKey:board];
     [data setObject:scoreDict forKey:@"Scores"];
+    
+    GCLOG(@"Score for '%@' leaderboard updated to %@.", board, score);
+    
+    return YES;
 }
 
 - (NSNumber*)scoreForLeaderboard:(NSString*)board
 {
     NSDictionary *scoreDict = [data objectForKey:@"Scores"];
     return [scoreDict valueForKey:board];
+}
+
+- (NSDictionary*)allScores
+{
+    return [data objectForKey:@"Scores"];
+}
+
+- (BOOL)unlockAchievement:(NSString*)achievement
+{
+    NSMutableDictionary *achievementDict = [NSMutableDictionary dictionaryWithDictionary:
+                                            [data objectForKey:@"Achievements"]];
+    NSNumber *currValue = [achievementDict valueForKey:achievement];
+    if (currValue && [currValue boolValue]) {
+        return NO;
+    }
+    
+    [achievementDict setValue:[NSNumber numberWithBool:YES] forKey:achievement];
+    [data setObject:achievementDict forKey:@"Achievements"];
+    
+    GCLOG(@"Achievement '%@' unlocked.", achievement);
+
+    return YES;
+}
+
+- (BOOL)isUnlockedAchievement:(NSString*)achievement
+{
+    NSDictionary *achievementDict = [data objectForKey:@"Achievements"];
+    NSNumber *currValue = [achievementDict valueForKey:achievement];
+    if (currValue && [currValue boolValue]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (NSDictionary*)allAchievements
+{
+    return [data objectForKey:@"Achievements"];
 }
 
 

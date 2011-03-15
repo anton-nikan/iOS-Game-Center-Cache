@@ -146,7 +146,7 @@
 					<object class="IBUILabel" id="1056210644">
 						<reference key="NSNextResponder" ref="774585933"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{15, 374}, {280, 21}}</string>
+						<string key="NSFrame">{{15, 339}, {280, 21}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="891125837"/>
@@ -165,7 +165,28 @@
 					<object class="IBUIButton" id="891125837">
 						<reference key="NSNextResponder" ref="774585933"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{87, 403}, {147, 37}}</string>
+						<string key="NSFrame">{{87, 368}, {147, 37}}</string>
+						<reference key="NSSuperview" ref="774585933"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="902877421"/>
+						<bool key="IBUIOpaque">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<int key="IBUIContentHorizontalAlignment">0</int>
+						<int key="IBUIContentVerticalAlignment">0</int>
+						<reference key="IBUIFont" ref="284509417"/>
+						<int key="IBUIButtonType">1</int>
+						<string key="IBUINormalTitle">Change Player</string>
+						<reference key="IBUIHighlightedTitleColor" ref="237765189"/>
+						<object class="NSColor" key="IBUINormalTitleColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
+						</object>
+						<reference key="IBUINormalTitleShadowColor" ref="791600484"/>
+					</object>
+					<object class="IBUIButton" id="902877421">
+						<reference key="NSNextResponder" ref="774585933"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{87, 413}, {147, 37}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -175,7 +196,7 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<reference key="IBUIFont" ref="284509417"/>
 						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Change Player</string>
+						<string key="IBUINormalTitle">Reset progress</string>
 						<reference key="IBUIHighlightedTitleColor" ref="237765189"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
@@ -297,6 +318,7 @@
 							<reference ref="1056210644"/>
 							<reference ref="891125837"/>
 							<reference ref="228611421"/>
+							<reference ref="902877421"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -335,6 +357,11 @@
 						<reference key="object" ref="228611421"/>
 						<reference key="parent" ref="774585933"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">29</int>
+						<reference key="object" ref="902877421"/>
+						<reference key="parent" ref="774585933"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -348,6 +375,7 @@
 					<string>14.IBPluginDependency</string>
 					<string>15.IBPluginDependency</string>
 					<string>16.IBPluginDependency</string>
+					<string>29.IBPluginDependency</string>
 					<string>6.IBEditorWindowLastContentRect</string>
 					<string>6.IBPluginDependency</string>
 					<string>8.IBPluginDependency</string>
@@ -357,6 +385,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>GCCacheSampleViewController</string>
 					<string>UIResponder</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -380,7 +409,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">28</int>
+			<int key="maxID">30</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

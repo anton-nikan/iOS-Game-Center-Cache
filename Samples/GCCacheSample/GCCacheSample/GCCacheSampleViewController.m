@@ -34,7 +34,6 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [[GCCache activeCache] submitScore:[NSNumber numberWithInt:alertView.tag] toLeaderboard:@"SimpleScore"];
     self.bestScoreLabel.text = [NSString stringWithFormat:@"Best Score: %@",
                                 [[GCCache activeCache] scoreForLeaderboard:@"SimpleScore"]];
 
@@ -70,14 +69,28 @@
 
 - (IBAction)playAction
 {
-    int score = 32542 + rand() % 364534;    
+    int score = 32542 + rand() % 364534;
+    int achievementIdx = rand() % 6;
+    NSString *achievement = [NSString stringWithFormat:@"Ach-%02d", achievementIdx + 1];
+    
+    NSString *msg = nil;
+    if (![[GCCache activeCache] isUnlockedAchievement:achievement]) {
+        msg = [NSString stringWithFormat:@"You've played the game, gained %d score and unlocked '%@' achievement",
+               score, achievement];
+    } else {
+        msg = [NSString stringWithFormat:@"You've played the game and gained %d score",
+               score];
+    }
+    
     UIAlertView *resultAlert = [[UIAlertView alloc] initWithTitle:@"Game Finished"
-                                                          message:[NSString stringWithFormat:@"You've played the game and gained %d score", score]
+                                                          message:msg
                                                          delegate:self
                                                 cancelButtonTitle:@"OK"
                                                 otherButtonTitles:nil];
-    resultAlert.tag = score;
     [resultAlert show];
+
+    [[GCCache activeCache] submitScore:[NSNumber numberWithInt:score] toLeaderboard:@"SimpleScore"];
+    [[GCCache activeCache] unlockAchievement:achievement];
 }
 
 - (IBAction)changePlayerAction {

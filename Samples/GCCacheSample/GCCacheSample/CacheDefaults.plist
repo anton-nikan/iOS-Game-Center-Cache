@@ -11,5 +11,92 @@
 			<string>Ascending</string>
 		</dict>
 	</array>
+	<key>Achievements</key>
+	<array>
+		<dict>
+			<key>Name</key>
+			<string>Ach-01</string>
+			<key>Title</key>
+			<string>Achievement 01</string>
+			<key>IsHidden</key>
+			<false/>
+			<key>PreEarnedDescription</key>
+			<string>This is the Achievement 01</string>
+			<key>EarnedDescription</key>
+			<string>You&apos;ve earned the Achievement 01</string>
+			<key>Image</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>Name</key>
+			<string>Ach-02</string>
+			<key>Title</key>
+			<string>Achievement 02</string>
+			<key>IsHidden</key>
+			<false/>
+			<key>PreEarnedDescription</key>
+			<string>This is the Achievement 02</string>
+			<key>EarnedDescription</key>
+			<string>You&apos;ve earned the Achievement 02</string>
+			<key>Image</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>Name</key>
+			<string>Ach-03</string>
+			<key>Title</key>
+			<string>Achievement 03</string>
+			<key>IsHidden</key>
+			<false/>
+			<key>PreEarnedDescription</key>
+			<string>This is the Achievement 03</string>
+			<key>EarnedDescription</key>
+			<string>You&apos;ve earned the Achievement 03</string>
+			<key>Image</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>Name</key>
+			<string>Ach-04</string>
+			<key>Title</key>
+			<string>Achievement 04</string>
+			<key>IsHidden</key>
+			<false/>
+			<key>PreEarnedDescription</key>
+			<string>This is the Achievement 04</string>
+			<key>EarnedDescription</key>
+			<string>You&apos;ve earned the Achievement 04</string>
+			<key>Image</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>Name</key>
+			<string>Ach-05</string>
+			<key>Title</key>
+			<string>Achievement 05</string>
+			<key>IsHidden</key>
+			<false/>
+			<key>PreEarnedDescription</key>
+			<string>This is the Achievement 05</string>
+			<key>EarnedDescription</key>
+			<string>You&apos;ve earned the Achievement 05</string>
+			<key>Image</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>Name</key>
+			<string>Ach-06</string>
+			<key>Title</key>
+			<string>Achievement 06</string>
+			<key>IsHidden</key>
+			<false/>
+			<key>PreEarnedDescription</key>
+			<string>This is the Achievement 06</string>
+			<key>EarnedDescription</key>
+			<string>You&apos;ve earned the Achievement 06</string>
+			<key>Image</key>
+			<string></string>
+		</dict>
+	</array>
 </dict>
 </plist>
