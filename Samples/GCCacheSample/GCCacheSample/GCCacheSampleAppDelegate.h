@@ -3,7 +3,7 @@
 //  GCCacheSample
 //
 //  Created by nikan on 3/15/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright 2011 Anton Nikolaienko. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

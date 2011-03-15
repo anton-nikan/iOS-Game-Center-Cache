@@ -3,12 +3,13 @@
 //  GCCacheSample
 //
 //  Created by nikan on 3/15/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright 2011 Anton Nikolaienko. All rights reserved.
 //
 
 #import "GCCacheSampleAppDelegate.h"
-
 #import "GCCacheSampleViewController.h"
+#import "GCCache.h"
+
 
 @implementation GCCacheSampleAppDelegate
 
@@ -19,7 +20,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    // Initializing GameCenterCache local data
+    NSDictionary *cacheDefaults = [NSDictionary dictionaryWithContentsOfFile:
+                                   [[NSBundle mainBundle] pathForResource:@"CacheDefaults" ofType:@"plist"]];
+    [GCCache registerLeaderboards:[cacheDefaults objectForKey:@"Leaderboards"]];
+    
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Block online"
                                                     message:@"Do you want to test the app offline-only?"
@@ -35,6 +40,7 @@
 {
     if (buttonIndex == alertView.cancelButtonIndex) {
         offlineOnly = NO;
+        [GCCache launchGameCenter];
     } else {
         offlineOnly = YES;
     }
@@ -82,6 +88,8 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+    
+    [GCCache shutdown];
 }
 
 - (void)dealloc

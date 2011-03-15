@@ -23,12 +23,17 @@ static NSString *kGCDefaultProfileName = @"Default";
 @interface GCCache (Internal)
 - (id)initWithDictionary:(NSDictionary*)profileDict;
 - (BOOL)isEqualToProfile:(NSDictionary*)profileDict;
+
++ (BOOL)isBetterScore:(NSNumber*)lscore thanScore:(NSNumber*)rscore inOrder:(NSString*)order;
++ (NSDictionary*)leaderboardWithName:(NSString*)leaderboardName;
+
 @end
 
 
 @implementation GCCache
 
 static GCCache *activeCache_ = nil;
+static NSArray *leaderboards_ = nil;
 
 + (NSArray*)cachedProfiles
 {
@@ -80,21 +85,71 @@ static GCCache *activeCache_ = nil;
     }
 }
 
-+ (void)disposeActiveCache
-{
-    @synchronized(self) {
-        [activeCache_ release], activeCache_ = nil;
-    }
-}
-
-+ (void)registerAchievements:(NSDictionary*)achievements
++ (void)registerAchievements:(NSArray*)achievements
 {
     
 }
 
++ (void)registerLeaderboards:(NSArray*)leaderboards
+{
+    @synchronized(self) {
+        if (leaderboards_) {
+            [leaderboards_ release], leaderboards_ = nil;
+        }
+        leaderboards_ = [leaderboards retain];
+    }
+}
+
 + (BOOL)launchGameCenter
 {
+    GCLOG(@"Implement: Launching Game Center...");
     return NO;
+}
+
++ (void)shutdown
+{
+    @synchronized(self) {
+        [activeCache_ release], activeCache_ = nil;
+        [leaderboards_ release], leaderboards_ = nil;
+    }
+
+    GCLOG(@"GameCenterCache shut down.");
+}
+
+
+#pragma mark -
+
++ (BOOL)isBetterScore:(NSNumber*)lscore thanScore:(NSNumber*)rscore inOrder:(NSString*)order
+{
+    if ([order isEqualToString:@"Ascending"]) {
+        return [rscore compare:lscore] == NSOrderedAscending;
+    } else if ([order isEqualToString:@"Descending"]) {
+        return [rscore compare:lscore] == NSOrderedDescending;
+    }
+    
+    return NO;
+}
+
++ (NSDictionary*)leaderboardWithName:(NSString *)leaderboardName
+{
+    @synchronized(self) {
+        if (leaderboards_) {
+            NSUInteger idx = [leaderboards_ indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                if ([leaderboardName isEqualToString:[obj valueForKey:@"Name"]]) {
+                    *stop = YES;
+                    return YES;
+                }
+                
+                return NO;
+            }];
+            
+            if (idx != NSNotFound) {
+                return [leaderboards_ objectAtIndex:idx];
+            }
+        }
+    }
+    
+    return nil;
 }
 
 
@@ -140,16 +195,6 @@ static GCCache *activeCache_ = nil;
     return ([theName isEqualToString:self.profileName] && theIsLocal == self.isLocal) ? YES : NO;
 }
 
-- (NSArray*)allAchievements
-{
-    return nil;
-}
-
-- (NSArray*)allScores
-{
-    return nil;
-}
-
 - (void)synchronize
 {
     NSMutableArray *allProfiles = [NSMutableArray arrayWithArray:
@@ -171,6 +216,31 @@ static GCCache *activeCache_ = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:allProfiles forKey:kGCProfilesProperty];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)submitScore:(NSNumber*)score toLeaderboard:(NSString*)board
+{
+    NSMutableDictionary *scoreDict = [NSMutableDictionary dictionaryWithDictionary:[data objectForKey:@"Scores"]];
+    NSNumber *currScore = [scoreDict valueForKey:board];    
+    if (currScore) {
+        NSDictionary *leaderboard = [GCCache leaderboardWithName:board];
+        if (!leaderboard || ![GCCache isBetterScore:score
+                                          thanScore:currScore
+                                            inOrder:[leaderboard valueForKey:@"Order"]])
+        {
+            return;
+        }
+    }
+
+    // Rewriting current score
+    [scoreDict setValue:score forKey:board];
+    [data setObject:scoreDict forKey:@"Scores"];
+}
+
+- (NSNumber*)scoreForLeaderboard:(NSString*)board
+{
+    NSDictionary *scoreDict = [data objectForKey:@"Scores"];
+    return [scoreDict valueForKey:board];
 }
 
 
