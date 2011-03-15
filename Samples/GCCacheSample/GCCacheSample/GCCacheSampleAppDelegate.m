@@ -15,7 +15,6 @@
 
 @synthesize window=_window;
 @synthesize viewController=_viewController;
-@synthesize offlineOnly;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -29,8 +28,8 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Block online"
                                                     message:@"Do you want to test the app offline-only?"
                                                    delegate:self
-                                          cancelButtonTitle:@"NO"
-                                          otherButtonTitles:@"YES", nil];
+                                          cancelButtonTitle:@"YES"
+                                          otherButtonTitles:@"NO", nil];
     [alert show];
      
     return YES;
@@ -38,11 +37,8 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == alertView.cancelButtonIndex) {
-        offlineOnly = NO;
+    if (buttonIndex != alertView.cancelButtonIndex) {
         [GCCache launchGameCenter];
-    } else {
-        offlineOnly = YES;
     }
     
     [alertView release];

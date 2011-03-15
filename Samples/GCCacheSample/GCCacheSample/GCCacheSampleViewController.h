@@ -19,5 +19,6 @@
 
 - (IBAction)playAction;
 - (IBAction)changePlayerAction;
+- (IBAction)resetAction;
 
 @end

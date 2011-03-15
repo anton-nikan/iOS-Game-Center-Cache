@@ -33,6 +33,7 @@
 - (NSDictionary*)allAchievements;
 
 - (void)synchronize;
+- (void)reset;
 
 @property (readonly) NSString *profileName;
 @property (readonly) BOOL isLocal;

@@ -26,6 +26,7 @@ static NSString *kGCDefaultProfileName = @"Default";
 
 + (BOOL)isBetterScore:(NSNumber*)lscore thanScore:(NSNumber*)rscore inOrder:(NSString*)order;
 + (NSDictionary*)leaderboardWithName:(NSString*)leaderboardName;
++ (BOOL)isGameCenterAPIAvailable;
 
 @end
 
@@ -108,8 +109,13 @@ static NSArray *achievements_ = nil;
 
 + (BOOL)launchGameCenter
 {
-    GCLOG(@"Implement: Launching Game Center...");
-    return NO;
+    if (![GCCache isGameCenterAPIAvailable]) {
+        GCLOG(@"Game Center API not available on device. Working locally.");
+        return NO;
+    }
+
+    GCLOG(@"Game Center launched.");
+    return YES;
 }
 
 + (void)shutdown
@@ -120,11 +126,24 @@ static NSArray *achievements_ = nil;
         [achievements_ release], achievements_ = nil;
     }
 
-    GCLOG(@"GameCenterCache was shut down.");
+    GCLOG(@"GCCache shut down.");
 }
 
 
 #pragma mark -
+
++ (BOOL)isGameCenterAPIAvailable
+{
+    // Check for presence of GKLocalPlayer class.
+    BOOL localPlayerClassAvailable = (NSClassFromString(@"GKLocalPlayer")) != nil;
+    
+    // The device must be running iOS 4.1 or later.
+    NSString *reqSysVer = @"4.1";
+    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+    BOOL osVersionSupported = ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending);
+    
+    return (localPlayerClassAvailable && osVersionSupported);
+}
 
 + (BOOL)isBetterScore:(NSNumber*)lscore thanScore:(NSNumber*)rscore inOrder:(NSString*)order
 {
@@ -225,6 +244,18 @@ static NSArray *achievements_ = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     GCLOG(@"GCCache synchronized.");
+}
+
+- (void)reset
+{
+    NSMutableDictionary *minData = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                    [data valueForKey:@"Name"], @"Name",
+                                    [data valueForKey:@"IsLocal"], @"IsLocal",
+                                    nil];
+    [data release];
+    data = [minData retain];
+
+    GCLOG(@"GCCache reset.");
 }
 
 - (BOOL)submitScore:(NSNumber*)score toLeaderboard:(NSString*)board

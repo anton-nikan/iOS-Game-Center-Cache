@@ -11,11 +11,9 @@
 @class GCCacheSampleViewController;
 
 @interface GCCacheSampleAppDelegate : NSObject <UIApplicationDelegate, UIAlertViewDelegate> {
-    BOOL offlineOnly;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet GCCacheSampleViewController *viewController;
-@property (nonatomic, readonly) BOOL offlineOnly;
 
 @end

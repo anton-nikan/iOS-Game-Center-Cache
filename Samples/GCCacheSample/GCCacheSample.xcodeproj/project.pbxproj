@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F41FD170132FC71900110DC7 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F41FD16F132FC71900110DC7 /* GameKit.framework */; };
 		F42A1AB0132F8B1200824E86 /* CacheDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = F42A1AAF132F8B1200824E86 /* CacheDefaults.plist */; };
 		F4725A26132F6C6B00E7AE8C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4725A25132F6C6B00E7AE8C /* UIKit.framework */; };
 		F4725A28132F6C6B00E7AE8C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4725A27132F6C6B00E7AE8C /* Foundation.framework */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F41FD16F132FC71900110DC7 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		F42A1AAF132F8B1200824E86 /* CacheDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CacheDefaults.plist; sourceTree = "<group>"; };
 		F4725A21132F6C6B00E7AE8C /* GCCacheSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GCCacheSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4725A25132F6C6B00E7AE8C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -62,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F41FD170132FC71900110DC7 /* GameKit.framework in Frameworks */,
 				F4725A51132F705200E7AE8C /* libGameCenterCache.a in Frameworks */,
 				F4725A26132F6C6B00E7AE8C /* UIKit.framework in Frameworks */,
 				F4725A28132F6C6B00E7AE8C /* Foundation.framework in Frameworks */,
@@ -93,6 +96,7 @@
 		F4725A24132F6C6B00E7AE8C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F41FD16F132FC71900110DC7 /* GameKit.framework */,
 				F4725A50132F705200E7AE8C /* libGameCenterCache.a */,
 				F4725A25132F6C6B00E7AE8C /* UIKit.framework */,
 				F4725A27132F6C6B00E7AE8C /* Foundation.framework */,
@@ -104,13 +108,13 @@
 		F4725A2B132F6C6B00E7AE8C /* GCCacheSample */ = {
 			isa = PBXGroup;
 			children = (
+				F42A1AAF132F8B1200824E86 /* CacheDefaults.plist */,
 				F4725A34132F6C6B00E7AE8C /* GCCacheSampleAppDelegate.h */,
 				F4725A35132F6C6B00E7AE8C /* GCCacheSampleAppDelegate.m */,
 				F4725A3A132F6C6B00E7AE8C /* GCCacheSampleViewController.h */,
 				F4725A3B132F6C6B00E7AE8C /* GCCacheSampleViewController.m */,
 				F4725A3D132F6C6B00E7AE8C /* GCCacheSampleViewController.xib */,
 				F4725A2C132F6C6B00E7AE8C /* Supporting Files */,
-				F42A1AAF132F8B1200824E86 /* CacheDefaults.plist */,
 			);
 			path = GCCacheSample;
 			sourceTree = "<group>";
