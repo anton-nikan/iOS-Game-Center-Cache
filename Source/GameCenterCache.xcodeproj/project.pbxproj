@@ -1,0 +1,223 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F42A1AA7132F7ED600824E86 /* GameCenterCache.h in Headers */ = {isa = PBXBuildFile; fileRef = F42A1AA6132F7ED500824E86 /* GameCenterCache.h */; };
+		F4709E2D132B6FCB001A6BBB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4709E2C132B6FCB001A6BBB /* Foundation.framework */; };
+		F4E7510B132B74AF0050F2DB /* GCCache.h in Headers */ = {isa = PBXBuildFile; fileRef = F4E75109132B74AF0050F2DB /* GCCache.h */; };
+		F4E7510C132B74AF0050F2DB /* GCCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E7510A132B74AF0050F2DB /* GCCache.m */; };
+		F4E7510F132B77770050F2DB /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4E7510E132B77770050F2DB /* GameKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F42A1AA6132F7ED500824E86 /* GameCenterCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCenterCache.h; sourceTree = "<group>"; };
+		F4709E29132B6FCB001A6BBB /* libGameCenterCache.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGameCenterCache.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4709E2C132B6FCB001A6BBB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F4709E30132B6FCB001A6BBB /* GameCenterCache-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GameCenterCache-Prefix.pch"; sourceTree = "<group>"; };
+		F4E75109132B74AF0050F2DB /* GCCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCCache.h; sourceTree = "<group>"; };
+		F4E7510A132B74AF0050F2DB /* GCCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCCache.m; sourceTree = "<group>"; };
+		F4E7510E132B77770050F2DB /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F4709E26132B6FCB001A6BBB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4E7510F132B77770050F2DB /* GameKit.framework in Frameworks */,
+				F4709E2D132B6FCB001A6BBB /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F4709E1E132B6FCB001A6BBB = {
+			isa = PBXGroup;
+			children = (
+				F4709E2E132B6FCB001A6BBB /* Classes */,
+				F4709E2B132B6FCB001A6BBB /* Frameworks */,
+				F4709E2A132B6FCB001A6BBB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F4709E2A132B6FCB001A6BBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F4709E29132B6FCB001A6BBB /* libGameCenterCache.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F4709E2B132B6FCB001A6BBB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F4E7510E132B77770050F2DB /* GameKit.framework */,
+				F4709E2C132B6FCB001A6BBB /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F4709E2E132B6FCB001A6BBB /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F4E75109132B74AF0050F2DB /* GCCache.h */,
+				F4E7510A132B74AF0050F2DB /* GCCache.m */,
+				F4709E30132B6FCB001A6BBB /* GameCenterCache-Prefix.pch */,
+				F42A1AA6132F7ED500824E86 /* GameCenterCache.h */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		F4709E27132B6FCB001A6BBB /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4E7510B132B74AF0050F2DB /* GCCache.h in Headers */,
+				F42A1AA7132F7ED600824E86 /* GameCenterCache.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		F4709E28132B6FCB001A6BBB /* GameCenterCache */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F4709E33132B6FCB001A6BBB /* Build configuration list for PBXNativeTarget "GameCenterCache" */;
+			buildPhases = (
+				F4709E25132B6FCB001A6BBB /* Sources */,
+				F4709E26132B6FCB001A6BBB /* Frameworks */,
+				F4709E27132B6FCB001A6BBB /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GameCenterCache;
+			productName = GameCenterCache;
+			productReference = F4709E29132B6FCB001A6BBB /* libGameCenterCache.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F4709E20132B6FCB001A6BBB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Anton Nikolaienko";
+			};
+			buildConfigurationList = F4709E23132B6FCB001A6BBB /* Build configuration list for PBXProject "GameCenterCache" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F4709E1E132B6FCB001A6BBB;
+			productRefGroup = F4709E2A132B6FCB001A6BBB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F4709E28132B6FCB001A6BBB /* GameCenterCache */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F4709E25132B6FCB001A6BBB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4E7510C132B74AF0050F2DB /* GCCache.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F4709E31132B6FCB001A6BBB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		F4709E32132B6FCB001A6BBB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		F4709E34132B6FCB001A6BBB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DSTROOT = /tmp/GameCenterCache.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GameCenterCache-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F4709E35132B6FCB001A6BBB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DSTROOT = /tmp/GameCenterCache.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GameCenterCache-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F4709E23132B6FCB001A6BBB /* Build configuration list for PBXProject "GameCenterCache" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4709E31132B6FCB001A6BBB /* Debug */,
+				F4709E32132B6FCB001A6BBB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F4709E33132B6FCB001A6BBB /* Build configuration list for PBXNativeTarget "GameCenterCache" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4709E34132B6FCB001A6BBB /* Debug */,
+				F4709E35132B6FCB001A6BBB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F4709E20132B6FCB001A6BBB /* Project object */;
+}

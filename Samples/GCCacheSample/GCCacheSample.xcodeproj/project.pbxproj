@@ -1,0 +1,354 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F4725A26132F6C6B00E7AE8C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4725A25132F6C6B00E7AE8C /* UIKit.framework */; };
+		F4725A28132F6C6B00E7AE8C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4725A27132F6C6B00E7AE8C /* Foundation.framework */; };
+		F4725A2A132F6C6B00E7AE8C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4725A29132F6C6B00E7AE8C /* CoreGraphics.framework */; };
+		F4725A30132F6C6B00E7AE8C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F4725A2E132F6C6B00E7AE8C /* InfoPlist.strings */; };
+		F4725A33132F6C6B00E7AE8C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F4725A32132F6C6B00E7AE8C /* main.m */; };
+		F4725A36132F6C6B00E7AE8C /* GCCacheSampleAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F4725A35132F6C6B00E7AE8C /* GCCacheSampleAppDelegate.m */; };
+		F4725A39132F6C6B00E7AE8C /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4725A37132F6C6B00E7AE8C /* MainWindow.xib */; };
+		F4725A3C132F6C6B00E7AE8C /* GCCacheSampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4725A3B132F6C6B00E7AE8C /* GCCacheSampleViewController.m */; };
+		F4725A3F132F6C6B00E7AE8C /* GCCacheSampleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4725A3D132F6C6B00E7AE8C /* GCCacheSampleViewController.xib */; };
+		F4725A51132F705200E7AE8C /* libGameCenterCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4725A50132F705200E7AE8C /* libGameCenterCache.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F4725A4C132F6FF800E7AE8C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F4725A45132F6FF800E7AE8C /* GameCenterCache.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F4709E29132B6FCB001A6BBB;
+			remoteInfo = GameCenterCache;
+		};
+		F4725A4E132F704900E7AE8C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F4725A45132F6FF800E7AE8C /* GameCenterCache.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F4709E28132B6FCB001A6BBB;
+			remoteInfo = GameCenterCache;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F4725A21132F6C6B00E7AE8C /* GCCacheSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GCCacheSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4725A25132F6C6B00E7AE8C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F4725A27132F6C6B00E7AE8C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F4725A29132F6C6B00E7AE8C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		F4725A2D132F6C6B00E7AE8C /* GCCacheSample-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GCCacheSample-Info.plist"; sourceTree = "<group>"; };
+		F4725A2F132F6C6B00E7AE8C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F4725A31132F6C6B00E7AE8C /* GCCacheSample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GCCacheSample-Prefix.pch"; sourceTree = "<group>"; };
+		F4725A32132F6C6B00E7AE8C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F4725A34132F6C6B00E7AE8C /* GCCacheSampleAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCCacheSampleAppDelegate.h; sourceTree = "<group>"; };
+		F4725A35132F6C6B00E7AE8C /* GCCacheSampleAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCCacheSampleAppDelegate.m; sourceTree = "<group>"; };
+		F4725A38132F6C6B00E7AE8C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		F4725A3A132F6C6B00E7AE8C /* GCCacheSampleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCCacheSampleViewController.h; sourceTree = "<group>"; };
+		F4725A3B132F6C6B00E7AE8C /* GCCacheSampleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCCacheSampleViewController.m; sourceTree = "<group>"; };
+		F4725A3E132F6C6B00E7AE8C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/GCCacheSampleViewController.xib; sourceTree = "<group>"; };
+		F4725A45132F6FF800E7AE8C /* GameCenterCache.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GameCenterCache.xcodeproj; path = ../../Source/GameCenterCache.xcodeproj; sourceTree = "<group>"; };
+		F4725A50132F705200E7AE8C /* libGameCenterCache.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libGameCenterCache.a; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F4725A1E132F6C6B00E7AE8C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4725A51132F705200E7AE8C /* libGameCenterCache.a in Frameworks */,
+				F4725A26132F6C6B00E7AE8C /* UIKit.framework in Frameworks */,
+				F4725A28132F6C6B00E7AE8C /* Foundation.framework in Frameworks */,
+				F4725A2A132F6C6B00E7AE8C /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F4725A16132F6C6B00E7AE8C = {
+			isa = PBXGroup;
+			children = (
+				F4725A2B132F6C6B00E7AE8C /* GCCacheSample */,
+				F4725A24132F6C6B00E7AE8C /* Frameworks */,
+				F4725A22132F6C6B00E7AE8C /* Products */,
+				F4725A45132F6FF800E7AE8C /* GameCenterCache.xcodeproj */,
+			);
+			sourceTree = "<group>";
+		};
+		F4725A22132F6C6B00E7AE8C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F4725A21132F6C6B00E7AE8C /* GCCacheSample.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F4725A24132F6C6B00E7AE8C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F4725A50132F705200E7AE8C /* libGameCenterCache.a */,
+				F4725A25132F6C6B00E7AE8C /* UIKit.framework */,
+				F4725A27132F6C6B00E7AE8C /* Foundation.framework */,
+				F4725A29132F6C6B00E7AE8C /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F4725A2B132F6C6B00E7AE8C /* GCCacheSample */ = {
+			isa = PBXGroup;
+			children = (
+				F4725A34132F6C6B00E7AE8C /* GCCacheSampleAppDelegate.h */,
+				F4725A35132F6C6B00E7AE8C /* GCCacheSampleAppDelegate.m */,
+				F4725A3A132F6C6B00E7AE8C /* GCCacheSampleViewController.h */,
+				F4725A3B132F6C6B00E7AE8C /* GCCacheSampleViewController.m */,
+				F4725A3D132F6C6B00E7AE8C /* GCCacheSampleViewController.xib */,
+				F4725A2C132F6C6B00E7AE8C /* Supporting Files */,
+			);
+			path = GCCacheSample;
+			sourceTree = "<group>";
+		};
+		F4725A2C132F6C6B00E7AE8C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F4725A37132F6C6B00E7AE8C /* MainWindow.xib */,
+				F4725A2D132F6C6B00E7AE8C /* GCCacheSample-Info.plist */,
+				F4725A2E132F6C6B00E7AE8C /* InfoPlist.strings */,
+				F4725A31132F6C6B00E7AE8C /* GCCacheSample-Prefix.pch */,
+				F4725A32132F6C6B00E7AE8C /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F4725A46132F6FF800E7AE8C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F4725A4D132F6FF800E7AE8C /* libGameCenterCache.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F4725A20132F6C6B00E7AE8C /* GCCacheSample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F4725A42132F6C6B00E7AE8C /* Build configuration list for PBXNativeTarget "GCCacheSample" */;
+			buildPhases = (
+				F4725A1D132F6C6B00E7AE8C /* Sources */,
+				F4725A1E132F6C6B00E7AE8C /* Frameworks */,
+				F4725A1F132F6C6B00E7AE8C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F4725A4F132F704900E7AE8C /* PBXTargetDependency */,
+			);
+			name = GCCacheSample;
+			productName = GCCacheSample;
+			productReference = F4725A21132F6C6B00E7AE8C /* GCCacheSample.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F4725A18132F6C6B00E7AE8C /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = F4725A1B132F6C6B00E7AE8C /* Build configuration list for PBXProject "GCCacheSample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F4725A16132F6C6B00E7AE8C;
+			productRefGroup = F4725A22132F6C6B00E7AE8C /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F4725A46132F6FF800E7AE8C /* Products */;
+					ProjectRef = F4725A45132F6FF800E7AE8C /* GameCenterCache.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				F4725A20132F6C6B00E7AE8C /* GCCacheSample */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		F4725A4D132F6FF800E7AE8C /* libGameCenterCache.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGameCenterCache.a;
+			remoteRef = F4725A4C132F6FF800E7AE8C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F4725A1F132F6C6B00E7AE8C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4725A30132F6C6B00E7AE8C /* InfoPlist.strings in Resources */,
+				F4725A39132F6C6B00E7AE8C /* MainWindow.xib in Resources */,
+				F4725A3F132F6C6B00E7AE8C /* GCCacheSampleViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F4725A1D132F6C6B00E7AE8C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4725A33132F6C6B00E7AE8C /* main.m in Sources */,
+				F4725A36132F6C6B00E7AE8C /* GCCacheSampleAppDelegate.m in Sources */,
+				F4725A3C132F6C6B00E7AE8C /* GCCacheSampleViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F4725A4F132F704900E7AE8C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GameCenterCache;
+			targetProxy = F4725A4E132F704900E7AE8C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F4725A2E132F6C6B00E7AE8C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F4725A2F132F6C6B00E7AE8C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		F4725A37132F6C6B00E7AE8C /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F4725A38132F6C6B00E7AE8C /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		F4725A3D132F6C6B00E7AE8C /* GCCacheSampleViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F4725A3E132F6C6B00E7AE8C /* en */,
+			);
+			name = GCCacheSampleViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F4725A40132F6C6B00E7AE8C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../Source\"";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		F4725A41132F6C6B00E7AE8C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../Source\"";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		F4725A43132F6C6B00E7AE8C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GCCacheSample/GCCacheSample-Prefix.pch";
+				INFOPLIST_FILE = "GCCacheSample/GCCacheSample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		F4725A44132F6C6B00E7AE8C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GCCacheSample/GCCacheSample-Prefix.pch";
+				INFOPLIST_FILE = "GCCacheSample/GCCacheSample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F4725A1B132F6C6B00E7AE8C /* Build configuration list for PBXProject "GCCacheSample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4725A40132F6C6B00E7AE8C /* Debug */,
+				F4725A41132F6C6B00E7AE8C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F4725A42132F6C6B00E7AE8C /* Build configuration list for PBXNativeTarget "GCCacheSample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4725A43132F6C6B00E7AE8C /* Debug */,
+				F4725A44132F6C6B00E7AE8C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F4725A18132F6C6B00E7AE8C /* Project object */;
+}

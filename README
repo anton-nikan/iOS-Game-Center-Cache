@@ -1,0 +1,22 @@
+iOS Game Center Cache framework
+
+Current version: Draft 0.1.1 (emerging).
+
+Purpose:
+	- Work as weakly connected proxy to the Game Center.
+	- Provide functionality to work with user scores, achievements and any other related data in both online/offline and with multiple user profiles.
+
+Public classes:
+	- 
+
+Features:
+	- 
+	- 
+	
+Samples:
+	- 
+	- 
+
+
+Copyright (C) 2011 by Anton Nikolaienko.
+http://github.com/anton-nikan/iOS-Game-Center-Cache
