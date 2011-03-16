@@ -15,6 +15,7 @@
 
 @synthesize window=_window;
 @synthesize viewController=_viewController;
+@synthesize progressIndicator = _progressIndicator;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -28,23 +29,32 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Block online"
                                                     message:@"Do you want to test the app offline-only?"
                                                    delegate:self
-                                          cancelButtonTitle:@"YES"
-                                          otherButtonTitles:@"NO", nil];
+                                          cancelButtonTitle:@"Yes"
+                                          otherButtonTitles:@"No", nil];
     [alert show];
      
     return YES;
 }
 
+- (void)showMainView
+{
+    self.window.rootViewController = self.viewController;
+    [self.window makeKeyAndVisible];
+    
+    [self.progressIndicator stopAnimating];
+    [self.viewController updateProfileInfo];
+}
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != alertView.cancelButtonIndex) {
-        [GCCache launchGameCenter];
+        [self.progressIndicator startAnimating];
+        [GCCache launchGameCenterWithCompletionTarget:self action:@selector(showMainView)];
+    } else {
+        [self showMainView];
     }
     
     [alertView release];
-    
-    self.window.rootViewController = self.viewController;
-    [self.window makeKeyAndVisible];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -94,6 +104,7 @@
 {
     [_window release];
     [_viewController release];
+    [_progressIndicator release];
     [super dealloc];
 }
 

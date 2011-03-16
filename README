@@ -1,6 +1,6 @@
-iOS Game Center Cache framework
+iOS Game Center Cache
 
-Current version: Draft 0.1.1 (emerging).
+Current version: 0.1.1 emerging.
 
 Purpose:
 	- Work as weakly connected proxy to the Game Center.

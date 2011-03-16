@@ -21,4 +21,6 @@
 - (IBAction)changePlayerAction;
 - (IBAction)resetAction;
 
+- (void)updateProfileInfo;
+
 @end

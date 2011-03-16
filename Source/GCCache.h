@@ -21,7 +21,7 @@
 + (GCCache*)activeCache;
 + (void)setActiveCache:(GCCache*)cache;
 
-+ (BOOL)launchGameCenter;
++ (void)launchGameCenterWithCompletionTarget:(id)target action:(SEL)action;
 + (void)shutdown;
 
 - (BOOL)submitScore:(NSNumber*)score toLeaderboard:(NSString*)board;

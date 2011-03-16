@@ -6,6 +6,6 @@
 //  Copyright 2011 Anton Nikolaienko. All rights reserved.
 //
 
-#define ENABLE_LOGGING      1
+#define GCCACHE_ENABLE_LOGGING      1
 
 #import "GCCache.h"

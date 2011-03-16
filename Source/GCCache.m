@@ -9,7 +9,7 @@
 #import "GCCache.h"
 
 
-#if ENABLE_LOGGING
+#if GCCACHE_ENABLE_LOGGING
 #define GCLOG(...)
 #else
 #define GCLOG(...) NSLog(__VA_ARGS__)
@@ -26,7 +26,9 @@ static NSString *kGCDefaultProfileName = @"Default";
 
 + (BOOL)isBetterScore:(NSNumber*)lscore thanScore:(NSNumber*)rscore inOrder:(NSString*)order;
 + (NSDictionary*)leaderboardWithName:(NSString*)leaderboardName;
+
 + (BOOL)isGameCenterAPIAvailable;
++ (void)authenticateLocalPlayerWithCompletionHandler:(void(^)(NSError *error))completionHandler;
 
 @end
 
@@ -107,15 +109,61 @@ static NSArray *achievements_ = nil;
     }
 }
 
-+ (BOOL)launchGameCenter
++ (void)authenticateLocalPlayerWithCompletionHandler:(void(^)(NSError *error))completionHandler
+{
+    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+    [localPlayer authenticateWithCompletionHandler:^(NSError *e) {
+        if (localPlayer.isAuthenticated)
+        {
+            GCLOG(@"Local Player authenticated.");
+
+            // Looking for player profile in cached
+            BOOL profileFound = NO;
+            NSArray *profiles = [GCCache cachedProfiles];
+            for (NSDictionary *profile in profiles) {
+                NSString *playerID = [profile valueForKey:@"PlayerID"];
+                NSNumber *local = [profile valueForKey:@"IsLocal"];
+                if (playerID && [playerID isEqualToString:[localPlayer playerID]] && ![local boolValue]) {
+                    GCLOG(@"Player profile found in cache. Switching to it.");
+                    [GCCache setActiveCache:[GCCache cacheForProfile:profile]];
+                    profileFound = YES;
+                    break;
+                }
+            }
+            
+            if (!profileFound) {
+                GCCache *newCache = [[GCCache alloc] initWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                         [localPlayer alias], @"Name",
+                                                                         [localPlayer playerID], @"PlayerID",
+                                                                         [NSNumber numberWithBool:NO], @"IsLocal",
+                                                                         nil]];
+                [GCCache setActiveCache:newCache];
+                [newCache release];
+                
+                GCLOG(@"New profile created for Player.");
+            }
+        }
+
+        completionHandler(e);
+    }];
+}
+
++ (void)launchGameCenterWithCompletionTarget:(id)target action:(SEL)action
 {
     if (![GCCache isGameCenterAPIAvailable]) {
         GCLOG(@"Game Center API not available on device. Working locally.");
-        return NO;
-    }
+        [target performSelectorOnMainThread:action withObject:nil waitUntilDone:NO];
+    } else {
+        [GCCache authenticateLocalPlayerWithCompletionHandler:^(NSError *e) {
+            if (e) {
+                GCLOG(@"Failed to authenticate Local Player. Working locally.");
+            } else {
+                GCLOG(@"Game Center launched.");
+            }
 
-    GCLOG(@"Game Center launched.");
-    return YES;
+            [target performSelectorOnMainThread:action withObject:nil waitUntilDone:NO];
+        }];
+    }
 }
 
 + (void)shutdown

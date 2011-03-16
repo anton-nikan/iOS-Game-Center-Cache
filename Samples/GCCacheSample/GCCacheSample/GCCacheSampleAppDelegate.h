@@ -11,9 +11,11 @@
 @class GCCacheSampleViewController;
 
 @interface GCCacheSampleAppDelegate : NSObject <UIApplicationDelegate, UIAlertViewDelegate> {
+    UIActivityIndicatorView *_progressIndicator;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet GCCacheSampleViewController *viewController;
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *progressIndicator;
 
 @end

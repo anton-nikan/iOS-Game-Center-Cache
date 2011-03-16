@@ -99,6 +99,11 @@
 - (IBAction)resetAction
 {
     [[GCCache activeCache] reset];
+    [self updateProfileInfo];
+}
+
+- (void)updateProfileInfo
+{
     self.playerLabel.text = [NSString stringWithFormat:@"Player: %@", [GCCache activeCache].profileName];
     self.bestScoreLabel.text = [NSString stringWithFormat:@"Best Score: %@", [[GCCache activeCache] scoreForLeaderboard:@"SimpleScore"]];
 }
