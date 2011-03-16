@@ -24,6 +24,7 @@
     NSDictionary *cacheDefaults = [NSDictionary dictionaryWithContentsOfFile:
                                    [[NSBundle mainBundle] pathForResource:@"CacheDefaults" ofType:@"plist"]];
     [GCCache registerLeaderboards:[cacheDefaults objectForKey:@"Leaderboards"]];
+    [GCCache registerAchievements:[cacheDefaults objectForKey:@"Achievements"]];
     
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Block online"

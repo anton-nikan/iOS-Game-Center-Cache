@@ -70,13 +70,17 @@
 - (void)leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController
 {
     [self dismissModalViewControllerAnimated:YES];
-    [viewController release];
+}
+
+- (void)achievementViewControllerDidFinish:(GKAchievementViewController *)viewController
+{
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (IBAction)playAction
 {
     int score = 32542 + rand() % 364534;
-    int achievementIdx = rand() % 6;
+    int achievementIdx = rand() % 5;
     NSString *achievement = [NSString stringWithFormat:@"Ach-%02d", achievementIdx + 1];
     
     NSString *msg = nil;
@@ -115,6 +119,19 @@
         {
             leaderboardController.leaderboardDelegate = self;
             [self presentModalViewController: leaderboardController animated: YES];
+            [leaderboardController release];
+        }
+    }
+}
+
+- (IBAction)achievementsAction {
+    if (![[GCCache activeCache] isLocal]) {
+        GKAchievementViewController *achievements = [[GKAchievementViewController alloc] init];
+        if (achievements != nil)
+        {
+            achievements.achievementDelegate = self;
+            [self presentModalViewController: achievements animated: YES];
+            [achievements release];
         }
     }
 }

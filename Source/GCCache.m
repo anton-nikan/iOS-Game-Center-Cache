@@ -26,11 +26,14 @@ static NSString *kGCDefaultProfileName = @"Default";
 
 + (BOOL)isBetterScore:(NSNumber*)lscore thanScore:(NSNumber*)rscore inOrder:(NSString*)order;
 + (NSDictionary*)leaderboardWithName:(NSString*)leaderboardName;
++ (NSDictionary*)achievementWithName:(NSString*)achievementName;
 
 + (BOOL)isGameCenterAPIAvailable;
 + (void)authenticateLocalPlayerWithCompletionHandler:(void(^)(NSError *error))completionHandler;
 
 - (void)archiveScore:(GKScore*)score;
+- (void)archiveAchievement:(GKAchievement*)achievement;
+- (void)archiveReset;
 
 @end
 
@@ -228,6 +231,28 @@ static NSArray *achievements_ = nil;
     return nil;
 }
 
++ (NSDictionary*)achievementWithName:(NSString*)achievementName
+{
+    @synchronized(self) {
+        if (achievements_) {
+            NSUInteger idx = [achievements_ indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                if ([achievementName isEqualToString:[obj valueForKey:@"Name"]]) {
+                    *stop = YES;
+                    return YES;
+                }
+                
+                return NO;
+            }];
+            
+            if (idx != NSNotFound) {
+                return [achievements_ objectAtIndex:idx];
+            }
+        }
+    }
+    
+    return nil;
+}
+
 
 #pragma mark -
 
@@ -304,6 +329,18 @@ static NSArray *achievements_ = nil;
                                     nil];
     [data release];
     data = [minData retain];
+    
+    if (!self.isLocal) {
+        [GKAchievement resetAchievementsWithCompletionHandler:^(NSError *error)
+        {
+            if (error != nil) {
+                GCLOG(@"Failed to reset achievements in GameCenter: %@", error.localizedDescription);
+                [self archiveReset];
+            } else {
+                GCLOG(@"Achievements reset in GameCenter.");
+            }
+        }];
+    }
 
     GCLOG(@"GCCache reset.");
 }
@@ -362,6 +399,12 @@ static NSArray *achievements_ = nil;
 
 - (BOOL)unlockAchievement:(NSString*)achievement
 {
+    NSDictionary *achievementDesc = [GCCache achievementWithName:achievement];
+    if (!achievementDesc) {
+        GCLOG(@"Error: failed to find achievement with name '%@'.", achievement);
+        return NO;
+    }
+
     NSMutableDictionary *achievementDict = [NSMutableDictionary dictionaryWithDictionary:
                                             [data objectForKey:@"Achievements"]];
     NSNumber *currValue = [achievementDict valueForKey:achievement];
@@ -371,6 +414,22 @@ static NSArray *achievements_ = nil;
     
     [achievementDict setValue:[NSNumber numberWithBool:YES] forKey:achievement];
     [data setObject:achievementDict forKey:@"Achievements"];
+    
+    if (!self.isLocal) {
+        GKAchievement *achievementObj = [[GKAchievement alloc] initWithIdentifier:[achievementDesc valueForKey:@"ID"]];
+        achievementObj.percentComplete = 100.0;
+        [achievementObj reportAchievementWithCompletionHandler:^(NSError *error)
+        {
+            if (!error) {
+                GCLOG(@"Achievement '%@' submitted to GameCenter.", achievement);
+            } else {
+                GCLOG(@"Failed to submit achievement to GameCenter: %@", error.localizedDescription);
+                [self archiveAchievement:achievementObj];
+            }
+        }];
+        
+        [achievementObj autorelease];
+    }
     
     GCLOG(@"Achievement '%@' unlocked.", achievement);
 
@@ -398,5 +457,14 @@ static NSArray *achievements_ = nil;
     GCLOG(@"Implement: archiving score...");
 }
 
+- (void)archiveAchievement:(GKAchievement *)achievement
+{
+    GCLOG(@"Implement: archiving achievement...");
+}
+
+- (void)archiveReset
+{
+    GCLOG(@"Implement: archiving reset...");
+}
 
 @end

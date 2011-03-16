@@ -5,6 +5,8 @@
 	<key>Achievements</key>
 	<array>
 		<dict>
+			<key>ID</key>
+			<string>achievements.ach01</string>
 			<key>EarnedDescription</key>
 			<string>You&apos;ve earned the Achievement 01</string>
 			<key>Image</key>
@@ -19,6 +21,8 @@
 			<string>Achievement 01</string>
 		</dict>
 		<dict>
+			<key>ID</key>
+			<string>achievements.ach02</string>
 			<key>EarnedDescription</key>
 			<string>You&apos;ve earned the Achievement 02</string>
 			<key>Image</key>
@@ -33,6 +37,8 @@
 			<string>Achievement 02</string>
 		</dict>
 		<dict>
+			<key>ID</key>
+			<string>achievements.ach03</string>
 			<key>EarnedDescription</key>
 			<string>You&apos;ve earned the Achievement 03</string>
 			<key>Image</key>
@@ -47,6 +53,8 @@
 			<string>Achievement 03</string>
 		</dict>
 		<dict>
+			<key>ID</key>
+			<string>achievements.ach04</string>
 			<key>EarnedDescription</key>
 			<string>You&apos;ve earned the Achievement 04</string>
 			<key>Image</key>
@@ -61,6 +69,8 @@
 			<string>Achievement 04</string>
 		</dict>
 		<dict>
+			<key>ID</key>
+			<string>achievements.ach05</string>
 			<key>EarnedDescription</key>
 			<string>You&apos;ve earned the Achievement 05</string>
 			<key>Image</key>
@@ -73,20 +83,6 @@
 			<string>This is the Achievement 05</string>
 			<key>Title</key>
 			<string>Achievement 05</string>
-		</dict>
-		<dict>
-			<key>EarnedDescription</key>
-			<string>You&apos;ve earned the Achievement 06</string>
-			<key>Image</key>
-			<string></string>
-			<key>IsHidden</key>
-			<false/>
-			<key>Name</key>
-			<string>Ach-06</string>
-			<key>PreEarnedDescription</key>
-			<string>This is the Achievement 06</string>
-			<key>Title</key>
-			<string>Achievement 06</string>
 		</dict>
 	</array>
 	<key>Leaderboards</key>

@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <GameKit/GameKit.h>
 
-@interface GCCacheSampleViewController : UIViewController <UIAlertViewDelegate, GKLeaderboardViewControllerDelegate> {
+@interface GCCacheSampleViewController : UIViewController
+    <UIAlertViewDelegate, GKLeaderboardViewControllerDelegate, GKAchievementViewControllerDelegate>
+{
     
     UILabel *playerLabel;
     UILabel *bestScoreLabel;
@@ -22,6 +24,7 @@
 - (IBAction)changePlayerAction;
 - (IBAction)resetAction;
 - (IBAction)scoresAction;
+- (IBAction)achievementsAction;
 
 - (void)updateProfileInfo;
 
