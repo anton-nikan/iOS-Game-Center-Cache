@@ -157,7 +157,13 @@ static NSArray *achievements_ = nil;
 {
     if (![GCCache isGameCenterAPIAvailable]) {
         GCLOG(@"Game Center API not available on device. Working locally.");
-        [target performSelectorOnMainThread:action withObject:nil waitUntilDone:NO];
+        [target performSelectorOnMainThread:action
+                                 withObject:[NSError errorWithDomain:@"GameCenterCache"
+                                                                code:0
+                                                            userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                      @"Game Center API not available on device. Working locally.", NSLocalizedDescriptionKey,
+                                                                      nil]]
+                              waitUntilDone:NO];
     } else {
         [GCCache authenticateLocalPlayerWithCompletionHandler:^(NSError *e) {
             if (e) {
@@ -166,7 +172,7 @@ static NSArray *achievements_ = nil;
                 GCLOG(@"Game Center launched.");
             }
 
-            [target performSelectorOnMainThread:action withObject:nil waitUntilDone:NO];
+            [target performSelectorOnMainThread:action withObject:e waitUntilDone:NO];
         }];
     }
 }

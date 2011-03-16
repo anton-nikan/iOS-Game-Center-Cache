@@ -37,8 +37,12 @@
     return YES;
 }
 
-- (void)showMainView
+- (void)gameCenterLaunchCompleted:(NSError*)e
 {
+    if (e) {
+        NSLog(@"Error launching GameCenter: %@", e.localizedDescription);
+    }
+    
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     
@@ -50,9 +54,9 @@
 {
     if (buttonIndex != alertView.cancelButtonIndex) {
         [self.progressIndicator startAnimating];
-        [GCCache launchGameCenterWithCompletionTarget:self action:@selector(showMainView)];
+        [GCCache launchGameCenterWithCompletionTarget:self action:@selector(gameCenterLaunchCompleted:)];
     } else {
-        [self showMainView];
+        [self gameCenterLaunchCompleted:nil];
     }
     
     [alertView release];
