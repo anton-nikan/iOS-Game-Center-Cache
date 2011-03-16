@@ -30,6 +30,8 @@ static NSString *kGCDefaultProfileName = @"Default";
 + (BOOL)isGameCenterAPIAvailable;
 + (void)authenticateLocalPlayerWithCompletionHandler:(void(^)(NSError *error))completionHandler;
 
+- (void)archiveScore:(GKScore*)score;
+
 @end
 
 
@@ -196,9 +198,9 @@ static NSArray *achievements_ = nil;
 + (BOOL)isBetterScore:(NSNumber*)lscore thanScore:(NSNumber*)rscore inOrder:(NSString*)order
 {
     if ([order isEqualToString:@"Ascending"]) {
-        return [rscore compare:lscore] == NSOrderedAscending;
+        return [lscore compare:rscore] == NSOrderedAscending;
     } else if ([order isEqualToString:@"Descending"]) {
-        return [rscore compare:lscore] == NSOrderedDescending;
+        return [lscore compare:rscore] == NSOrderedDescending;
     }
     
     return NO;
@@ -308,23 +310,41 @@ static NSArray *achievements_ = nil;
 
 - (BOOL)submitScore:(NSNumber*)score toLeaderboard:(NSString*)board
 {
+    NSDictionary *leaderboard = [GCCache leaderboardWithName:board];
+    if (!leaderboard) {
+        GCLOG(@"Error: failed to find leaderboard with name '%@'.", board);
+        return NO;
+    }
+
     NSMutableDictionary *scoreDict = [NSMutableDictionary dictionaryWithDictionary:[data objectForKey:@"Scores"]];
     NSNumber *currScore = [scoreDict valueForKey:board];    
-    if (currScore) {
-        NSDictionary *leaderboard = [GCCache leaderboardWithName:board];
-        if (!leaderboard || ![GCCache isBetterScore:score
-                                          thanScore:currScore
-                                            inOrder:[leaderboard valueForKey:@"Order"]])
-        {
-            return NO;
-        }
+    if (currScore && ![GCCache isBetterScore:score
+                                   thanScore:currScore
+                                     inOrder:[leaderboard valueForKey:@"Order"]])
+    {
+        return NO;
     }
 
     // Rewriting current score
     [scoreDict setValue:score forKey:board];
     [data setObject:scoreDict forKey:@"Scores"];
     
-    GCLOG(@"Score for '%@' leaderboard updated to %@.", board, score);
+    if (!self.isLocal) {
+        GKScore *newScore = [[GKScore alloc] initWithCategory:[leaderboard valueForKey:@"ID"]];
+        newScore.value = [score integerValue];
+        [newScore reportScoreWithCompletionHandler:^(NSError *error) {
+            if (!error) {
+                GCLOG(@"Score %@ for '%@' leaderboard submitted to GameCenter.", score, board);
+            } else {
+                GCLOG(@"Failed to submit score to GameCenter: %@", error.localizedDescription);
+                [self archiveScore:newScore];
+            }
+        }];
+        
+        [newScore autorelease];
+    }
+    
+    GCLOG(@"Score %@ for '%@' leaderboard updated.", score, board);
     
     return YES;
 }
@@ -371,6 +391,11 @@ static NSArray *achievements_ = nil;
 - (NSDictionary*)allAchievements
 {
     return [data objectForKey:@"Achievements"];
+}
+
+- (void)archiveScore:(GKScore*)score
+{
+    GCLOG(@"Implement: archiving score...");
 }
 
 

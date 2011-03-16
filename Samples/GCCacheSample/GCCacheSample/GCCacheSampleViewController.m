@@ -67,6 +67,12 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController
+{
+    [self dismissModalViewControllerAnimated:YES];
+    [viewController release];
+}
+
 - (IBAction)playAction
 {
     int score = 32542 + rand() % 364534;
@@ -100,6 +106,17 @@
 {
     [[GCCache activeCache] reset];
     [self updateProfileInfo];
+}
+
+- (IBAction)scoresAction {
+    if (![[GCCache activeCache] isLocal]) {
+        GKLeaderboardViewController *leaderboardController = [[GKLeaderboardViewController alloc] init];
+        if (leaderboardController != nil)
+        {
+            leaderboardController.leaderboardDelegate = self;
+            [self presentModalViewController: leaderboardController animated: YES];
+        }
+    }
 }
 
 - (void)updateProfileInfo
