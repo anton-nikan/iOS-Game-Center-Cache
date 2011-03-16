@@ -43,7 +43,11 @@
         NSLog(@"Error launching GameCenter: %@", e.localizedDescription);
     }
     
-    self.window.rootViewController = self.viewController;
+    if ([self.window respondsToSelector:@selector(setRootViewController:)]) {
+        self.window.rootViewController = self.viewController;
+    } else {
+        [self.window addSubview:self.viewController.view];
+    }
     [self.window makeKeyAndVisible];
     
     [self.progressIndicator stopAnimating];

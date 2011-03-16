@@ -219,17 +219,11 @@ static NSArray *achievements_ = nil;
 {
     @synchronized(self) {
         if (leaderboards_) {
-            NSUInteger idx = [leaderboards_ indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-                if ([leaderboardName isEqualToString:[obj valueForKey:@"Name"]]) {
-                    *stop = YES;
-                    return YES;
+            for (NSDictionary *board in leaderboards_) {
+                NSString *name = [board valueForKey:@"Name"];
+                if ([name isEqualToString:leaderboardName]) {
+                    return board;
                 }
-                
-                return NO;
-            }];
-            
-            if (idx != NSNotFound) {
-                return [leaderboards_ objectAtIndex:idx];
             }
         }
     }
@@ -241,17 +235,11 @@ static NSArray *achievements_ = nil;
 {
     @synchronized(self) {
         if (achievements_) {
-            NSUInteger idx = [achievements_ indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-                if ([achievementName isEqualToString:[obj valueForKey:@"Name"]]) {
-                    *stop = YES;
-                    return YES;
+            for (NSDictionary *achieve in achievements_) {
+                NSString *name = [achieve valueForKey:@"Name"];
+                if ([name isEqualToString:achievementName]) {
+                    return achieve;
                 }
-                
-                return NO;
-            }];
-            
-            if (idx != NSNotFound) {
-                return [achievements_ objectAtIndex:idx];
             }
         }
     }

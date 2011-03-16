@@ -12,7 +12,6 @@
 @interface GCCacheSampleViewController : UIViewController
     <UIAlertViewDelegate, GKLeaderboardViewControllerDelegate, GKAchievementViewControllerDelegate>
 {
-    
     UILabel *playerLabel;
     UILabel *bestScoreLabel;
 }
