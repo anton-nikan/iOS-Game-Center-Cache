@@ -402,11 +402,11 @@ static NSArray *achievements_ = nil;
     NSMutableDictionary *achievementDict = [NSMutableDictionary dictionaryWithDictionary:
                                             [data objectForKey:@"Achievements"]];
     NSNumber *currValue = [achievementDict valueForKey:achievement];
-    if (currValue && [currValue boolValue]) {
+    if (currValue && [currValue doubleValue] > 0.0) {
         return NO;
     }
     
-    [achievementDict setValue:[NSNumber numberWithBool:YES] forKey:achievement];
+    [achievementDict setValue:[NSNumber numberWithDouble:100.0] forKey:achievement];
     [data setObject:achievementDict forKey:@"Achievements"];
     
     if (!self.isLocal) {
@@ -434,11 +434,71 @@ static NSArray *achievements_ = nil;
 {
     NSDictionary *achievementDict = [data objectForKey:@"Achievements"];
     NSNumber *currValue = [achievementDict valueForKey:achievement];
-    if (currValue && [currValue boolValue]) {
+    if (currValue && [currValue doubleValue] >= 100.0) {
         return YES;
     }
     
     return NO;
+}
+
+- (BOOL)submitProgress:(double)progress toAchievement:(NSString*)achievement
+{
+    NSDictionary *achievementDesc = [GCCache achievementWithName:achievement];
+    if (!achievementDesc) {
+        GCLOG(@"Error: failed to find achievement with name '%@'.", achievement);
+        return NO;
+    }
+    
+    NSMutableDictionary *achievementDict = [NSMutableDictionary dictionaryWithDictionary:
+                                            [data objectForKey:@"Achievements"]];
+    NSNumber *currValue = [achievementDict valueForKey:achievement];
+    if (currValue && [currValue doubleValue] >= 100.0) {
+        return NO;
+    }
+
+    if (progress > 100.0) {
+        progress = 100.0;
+    } else if (progress < 0.0) {
+        progress = 0.0;
+    }
+    
+    [achievementDict setValue:[NSNumber numberWithDouble:progress] forKey:achievement];
+    [data setObject:achievementDict forKey:@"Achievements"];
+    
+    if (!self.isLocal) {
+        GKAchievement *achievementObj = [[GKAchievement alloc] initWithIdentifier:[achievementDesc valueForKey:@"ID"]];
+        achievementObj.percentComplete = progress;
+        [achievementObj reportAchievementWithCompletionHandler:^(NSError *error)
+         {
+             if (!error) {
+                 GCLOG(@"Progress %f of achievement '%@' submitted to GameCenter.", progress, achievement);
+             } else {
+                 GCLOG(@"Failed to submit achievement progress to GameCenter: %@", error.localizedDescription);
+                 [self archiveAchievement:achievementObj];
+             }
+         }];
+        
+        [achievementObj autorelease];
+    }
+    
+    if (progress == 100.0) {
+        GCLOG(@"Achievement '%@' unlocked.", achievement);
+    } else {
+        GCLOG(@"Achievement '%@' updated to progress %f.", achievement, progress);
+    }
+    
+    return YES;
+}
+
+- (double)progressOfAchievement:(NSString*)achievement
+{
+    NSDictionary *achievementDict = [data objectForKey:@"Achievements"];
+    NSNumber *currValue = [achievementDict valueForKey:achievement];
+    if (currValue) {
+        return [currValue doubleValue];
+    }
+
+    return 0.0;
 }
 
 - (NSDictionary*)allAchievements

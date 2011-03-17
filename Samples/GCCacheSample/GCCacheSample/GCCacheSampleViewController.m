@@ -81,15 +81,25 @@
 {
     int score = 32542 + rand() % 364534;
     int achievementIdx = rand() % 5;
+    double achievementProgress = 30.0 + 0.3 * 0.1 * (rand() % 1000);
     NSString *achievement = [NSString stringWithFormat:@"Ach-%02d", achievementIdx + 1];
     
     NSString *msg = nil;
-    if (![[GCCache activeCache] isUnlockedAchievement:achievement]) {
-        msg = [NSString stringWithFormat:@"You've played the game, gained %d score and unlocked '%@' achievement",
-               score, achievement];
-    } else {
+    if ([[GCCache activeCache] isUnlockedAchievement:achievement]) {
         msg = [NSString stringWithFormat:@"You've played the game and gained %d score",
                score];
+    } else {
+        double currProgress = [[GCCache activeCache] progressOfAchievement:achievement];
+        if (currProgress + achievementProgress < 100.0) {
+            msg = [NSString stringWithFormat:@"You've played the game, gained %d score and progressed to %.0f%% in '%@' achievement",
+                   score, achievementProgress + currProgress, achievement];
+        } else {
+            msg = [NSString stringWithFormat:@"You've played the game, gained %d score and unlocked '%@' achievement",
+                   score, achievement];
+        }
+        
+        [[GCCache activeCache] submitProgress:currProgress + achievementProgress
+                                toAchievement:achievement];
     }
     
     UIAlertView *resultAlert = [[UIAlertView alloc] initWithTitle:@"Game Finished"
@@ -100,7 +110,6 @@
     [resultAlert show];
 
     [[GCCache activeCache] submitScore:[NSNumber numberWithInt:score] toLeaderboard:@"SimpleScore"];
-    [[GCCache activeCache] unlockAchievement:achievement];
 }
 
 - (IBAction)changePlayerAction {

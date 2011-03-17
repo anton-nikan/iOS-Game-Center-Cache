@@ -30,6 +30,8 @@
 
 - (BOOL)unlockAchievement:(NSString*)achievement;
 - (BOOL)isUnlockedAchievement:(NSString*)achievement;
+- (BOOL)submitProgress:(double)progress toAchievement:(NSString*)achievement;
+- (double)progressOfAchievement:(NSString*)achievement;
 - (NSDictionary*)allAchievements;
 
 - (void)synchronize;
