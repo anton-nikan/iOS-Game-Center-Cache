@@ -215,7 +215,10 @@ static NSArray *achievements_ = nil;
 {
     @synchronized(self) {
         [authenticatedCache_ release], authenticatedCache_ = nil;
+
+        [activeCache_ save];
         [activeCache_ release], activeCache_ = nil;
+        
         [leaderboards_ release], leaderboards_ = nil;
         [achievements_ release], achievements_ = nil;
     }
@@ -322,7 +325,6 @@ static NSArray *achievements_ = nil;
 
 - (void)dealloc
 {
-    [self save];
     self.data = nil;
     [super dealloc];
 }
