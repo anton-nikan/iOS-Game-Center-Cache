@@ -277,23 +277,17 @@ static NSArray *achievements_ = nil;
 
 - (NSString*)profileName
 {
-    @synchronized(self.data) {
-        return [self.data valueForKey:@"Name"];
-    }
+    return [self.data valueForKey:@"Name"];
 }
 
 - (BOOL)isLocal
 {
-    @synchronized(self.data) {
-        return [[self.data valueForKey:@"IsLocal"] boolValue];
-    }
+    return [[self.data valueForKey:@"IsLocal"] boolValue];
 }
 
 - (NSString*)playerID
 {
-    @synchronized(self.data) {
-        return [self.data valueForKey:@"PlayerID"];
-    }
+    return [self.data valueForKey:@"PlayerID"];
 }
 
 - (BOOL)isDefault
@@ -345,18 +339,14 @@ static NSArray *achievements_ = nil;
     for (int i = 0; i < allProfiles.count; ++i) {
         NSDictionary *profile = [allProfiles objectAtIndex:i];
         if ([self isEqualToProfile:profile]) {
-            @synchronized(self.data) {
-                [allProfiles replaceObjectAtIndex:i withObject:self.data];
-            }
+            [allProfiles replaceObjectAtIndex:i withObject:self.data];
             replaced = YES;
             break;
         }
     }
     
     if (!replaced) {
-        @synchronized(self.data) {
-            [allProfiles addObject:self.data];
-        }
+        [allProfiles addObject:self.data];
     }
     
     [[NSUserDefaults standardUserDefaults] setObject:allProfiles forKey:kGCProfilesProperty];
@@ -369,14 +359,9 @@ static NSArray *achievements_ = nil;
 {
     // Sending out archived data
     if (!self.isLocal) {
-        int archiveLength = 0;
-        @synchronized(self.data) {
-            NSArray *archive = [self.data objectForKey:@"Archive"];
-            archiveLength = archive ? archive.count : 0;
-        }
-
-        if (archiveLength > 0) {
-            GCLOG(@"Sending archieved data to Game Center (%d)...", archiveLength);
+        NSArray *archive = [self.data objectForKey:@"Archive"];
+        if (archive && archive.count > 0) {
+            GCLOG(@"Sending archieved data to Game Center (%d)...", archive.count);
             [self submitArchiveFirstItem];
         }
     }
@@ -384,13 +369,11 @@ static NSArray *achievements_ = nil;
 
 - (void)reset
 {
-    @synchronized(self.data) {
-        self.data = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                     [self.data valueForKey:@"Name"], @"Name",
-                     [self.data valueForKey:@"IsLocal"], @"IsLocal",
-                     [self.data valueForKey:@"PlayerID"], @"PlayerID",  // can be nil
-                     nil];
-    }
+    self.data = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                 [self.data valueForKey:@"Name"], @"Name",
+                 [self.data valueForKey:@"IsLocal"], @"IsLocal",
+                 [self.data valueForKey:@"PlayerID"], @"PlayerID",  // can be nil
+                 nil];
     
     if (!self.isLocal) {
         [GKAchievement resetAchievementsWithCompletionHandler:^(NSError *error)
@@ -432,20 +415,18 @@ static NSArray *achievements_ = nil;
         [newScore autorelease];
     }
 
-    @synchronized(self.data) {
-        NSMutableDictionary *scoreDict = [NSMutableDictionary dictionaryWithDictionary:[self.data objectForKey:@"Scores"]];
-        NSNumber *currScore = [scoreDict valueForKey:board];    
-        if (currScore && ![GCCache isBetterScore:score
-                                       thanScore:currScore
-                                         inOrder:[leaderboard valueForKey:@"Order"]])
-        {
-            return NO;
-        }
-
-        // Rewriting current score
-        [scoreDict setValue:score forKey:board];
-        [self.data setObject:scoreDict forKey:@"Scores"];
+    NSMutableDictionary *scoreDict = [NSMutableDictionary dictionaryWithDictionary:[self.data objectForKey:@"Scores"]];
+    NSNumber *currScore = [scoreDict valueForKey:board];    
+    if (currScore && ![GCCache isBetterScore:score
+                                   thanScore:currScore
+                                     inOrder:[leaderboard valueForKey:@"Order"]])
+    {
+        return NO;
     }
+
+    // Rewriting current score
+    [scoreDict setValue:score forKey:board];
+    [self.data setObject:scoreDict forKey:@"Scores"];
     
     GCLOG(@"Score %@ for '%@' leaderboard updated.", score, board);
     
@@ -454,17 +435,13 @@ static NSArray *achievements_ = nil;
 
 - (NSNumber*)scoreForLeaderboard:(NSString*)board
 {
-    @synchronized(self.data) {
-        NSDictionary *scoreDict = [self.data objectForKey:@"Scores"];
-        return [scoreDict valueForKey:board];
-    }
+    NSDictionary *scoreDict = [self.data objectForKey:@"Scores"];
+    return [scoreDict valueForKey:board];
 }
 
 - (NSDictionary*)allScores
 {
-    @synchronized(self.data) {
-        return [self.data objectForKey:@"Scores"];
-    }
+    return [self.data objectForKey:@"Scores"];
 }
 
 
@@ -478,17 +455,15 @@ static NSArray *achievements_ = nil;
         return NO;
     }
 
-    @synchronized(self.data) {
-        NSMutableDictionary *achievementDict = [NSMutableDictionary dictionaryWithDictionary:
-                                                [self.data objectForKey:@"Achievements"]];
-        NSNumber *currValue = [achievementDict valueForKey:achievement];
-        if (currValue && [currValue doubleValue] > 0.0) {
-            return NO;
-        }
-        
-        [achievementDict setValue:[NSNumber numberWithDouble:100.0] forKey:achievement];
-        [self.data setObject:achievementDict forKey:@"Achievements"];
+    NSMutableDictionary *achievementDict = [NSMutableDictionary dictionaryWithDictionary:
+                                            [self.data objectForKey:@"Achievements"]];
+    NSNumber *currValue = [achievementDict valueForKey:achievement];
+    if (currValue && [currValue doubleValue] > 0.0) {
+        return NO;
     }
+    
+    [achievementDict setValue:[NSNumber numberWithDouble:100.0] forKey:achievement];
+    [self.data setObject:achievementDict forKey:@"Achievements"];
     
     if (!self.isLocal) {
         GKAchievement *achievementObj = [[GKAchievement alloc] initWithIdentifier:[achievementDesc valueForKey:@"ID"]];
@@ -513,12 +488,10 @@ static NSArray *achievements_ = nil;
 
 - (BOOL)isUnlockedAchievement:(NSString*)achievement
 {
-    @synchronized(self.data) {
-        NSDictionary *achievementDict = [self.data objectForKey:@"Achievements"];
-        NSNumber *currValue = [achievementDict valueForKey:achievement];
-        if (currValue && [currValue doubleValue] >= 100.0) {
-            return YES;
-        }
+    NSDictionary *achievementDict = [self.data objectForKey:@"Achievements"];
+    NSNumber *currValue = [achievementDict valueForKey:achievement];
+    if (currValue && [currValue doubleValue] >= 100.0) {
+        return YES;
     }
     
     return NO;
@@ -532,23 +505,21 @@ static NSArray *achievements_ = nil;
         return NO;
     }
     
-    @synchronized(self.data) {
-        NSMutableDictionary *achievementDict = [NSMutableDictionary dictionaryWithDictionary:
-                                                [self.data objectForKey:@"Achievements"]];
-        NSNumber *currValue = [achievementDict valueForKey:achievement];
-        if (currValue && [currValue doubleValue] >= 100.0) {
-            return NO;
-        }
-
-        if (progress > 100.0) {
-            progress = 100.0;
-        } else if (progress < 0.0) {
-            progress = 0.0;
-        }
-        
-        [achievementDict setValue:[NSNumber numberWithDouble:progress] forKey:achievement];
-        [self.data setObject:achievementDict forKey:@"Achievements"];
+    NSMutableDictionary *achievementDict = [NSMutableDictionary dictionaryWithDictionary:
+                                            [self.data objectForKey:@"Achievements"]];
+    NSNumber *currValue = [achievementDict valueForKey:achievement];
+    if (currValue && [currValue doubleValue] >= 100.0) {
+        return NO;
     }
+
+    if (progress > 100.0) {
+        progress = 100.0;
+    } else if (progress < 0.0) {
+        progress = 0.0;
+    }
+    
+    [achievementDict setValue:[NSNumber numberWithDouble:progress] forKey:achievement];
+    [self.data setObject:achievementDict forKey:@"Achievements"];
     
     if (!self.isLocal) {
         GKAchievement *achievementObj = [[GKAchievement alloc] initWithIdentifier:[achievementDesc valueForKey:@"ID"]];
@@ -577,12 +548,10 @@ static NSArray *achievements_ = nil;
 
 - (double)progressOfAchievement:(NSString*)achievement
 {
-    @synchronized(self.data) {
-        NSDictionary *achievementDict = [self.data objectForKey:@"Achievements"];
-        NSNumber *currValue = [achievementDict valueForKey:achievement];
-        if (currValue) {
-            return [currValue doubleValue];
-        }
+    NSDictionary *achievementDict = [self.data objectForKey:@"Achievements"];
+    NSNumber *currValue = [achievementDict valueForKey:achievement];
+    if (currValue) {
+        return [currValue doubleValue];
     }
     
     return 0.0;
@@ -590,9 +559,7 @@ static NSArray *achievements_ = nil;
 
 - (NSDictionary*)allAchievements
 {
-    @synchronized(self.data) {
-        return [self.data objectForKey:@"Achievements"];
-    }
+    return [self.data objectForKey:@"Achievements"];
 }
 
 
@@ -605,11 +572,9 @@ static NSArray *achievements_ = nil;
     [archiver encodeObject:score forKey:@"Score"];
     [archiver finishEncoding];
     
-    @synchronized(self.data) {
-        NSMutableArray *archive = [NSMutableArray arrayWithArray:[self.data objectForKey:@"Archive"]];
-        [archive addObject:dataStore];
-        [self.data setObject:archive forKey:@"Archive"];
-    }
+    NSMutableArray *archive = [NSMutableArray arrayWithArray:[self.data objectForKey:@"Archive"]];
+    [archive addObject:dataStore];
+    [self.data setObject:archive forKey:@"Archive"];
     
     [archiver release];
 
@@ -623,11 +588,9 @@ static NSArray *achievements_ = nil;
     [archiver encodeObject:achievement forKey:@"Achievement"];
     [archiver finishEncoding];
     
-    @synchronized(self.data) {
-        NSMutableArray *archive = [NSMutableArray arrayWithArray:[self.data objectForKey:@"Archive"]];
-        [archive addObject:dataStore];
-        [self.data setObject:archive forKey:@"Archive"];
-    }
+    NSMutableArray *archive = [NSMutableArray arrayWithArray:[self.data objectForKey:@"Archive"]];
+    [archive addObject:dataStore];
+    [self.data setObject:archive forKey:@"Archive"];
     
     [archiver release];
 
@@ -636,11 +599,9 @@ static NSArray *achievements_ = nil;
 
 - (void)archiveReset
 {
-    @synchronized(self.data) {
-        NSMutableArray *archive = [NSMutableArray arrayWithArray:[self.data objectForKey:@"Archive"]];
-        [archive addObject:@"Reset"];
-        [self.data setObject:archive forKey:@"Archive"];
-    }
+    NSMutableArray *archive = [NSMutableArray arrayWithArray:[self.data objectForKey:@"Archive"]];
+    [archive addObject:@"Reset"];
+    [self.data setObject:archive forKey:@"Archive"];
     
     GCLOG(@"Reset archieved.");
 }
@@ -648,18 +609,15 @@ static NSArray *achievements_ = nil;
 - (void)respondToSubmittedItem:(id)item
 {
     BOOL continueSubmit = NO;
-    @synchronized(self.data) {
-        NSMutableArray *archiveList = [NSMutableArray arrayWithArray:[self.data objectForKey:@"Archive"]];
-        if ([[archiveList objectAtIndex:0] isEqual:item]) {
-            [archiveList removeObjectAtIndex:0];
-
-            [self.data setObject:archiveList forKey:@"Archive"];
-        }
-        
-        if (archiveList.count > 0) {
-            continueSubmit = YES;
-            GCLOG(@"Continuing archive submittion (%d)...", archiveList.count);
-        }
+    NSMutableArray *archiveList = [NSMutableArray arrayWithArray:[self.data objectForKey:@"Archive"]];
+    if ([[archiveList objectAtIndex:0] isEqual:item]) {
+        [archiveList removeObjectAtIndex:0];
+        [self.data setObject:archiveList forKey:@"Archive"];
+    }
+    
+    if (archiveList.count > 0) {
+        continueSubmit = YES;
+        GCLOG(@"Continuing archive submittion (%d)...", archiveList.count);
     }
     
     if (continueSubmit) {
@@ -711,11 +669,9 @@ static NSArray *achievements_ = nil;
 - (void)submitArchiveFirstItem
 {
     id item = nil;
-    @synchronized(self.data) {
-        NSMutableArray *archiveList = [NSMutableArray arrayWithArray:[self.data objectForKey:@"Archive"]];
-        if (archiveList && archiveList.count) {
-            item = [[archiveList objectAtIndex:0] copy];
-        }
+    NSMutableArray *archiveList = [NSMutableArray arrayWithArray:[self.data objectForKey:@"Archive"]];
+    if (archiveList && archiveList.count) {
+        item = [[[archiveList objectAtIndex:0] copy] autorelease];
     }
 
     if (item) {
@@ -725,8 +681,6 @@ static NSArray *achievements_ = nil;
             } else {
                 GCLOG(@"Failed to submit archived data to GameCenter: %@", error.localizedDescription);
             }
-            
-            [item release];
         }];
     }
 }
