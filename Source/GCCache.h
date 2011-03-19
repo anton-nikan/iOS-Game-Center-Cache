@@ -37,6 +37,7 @@
 - (void)synchronize;
 - (void)reset;
 
+@property (retain) NSMutableDictionary *data;
 @property (readonly) NSString *profileName;
 @property (readonly) BOOL isLocal;
 
