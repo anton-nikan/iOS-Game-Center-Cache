@@ -41,5 +41,6 @@
 @property (retain) NSMutableDictionary *data;
 @property (readonly) NSString *profileName;
 @property (readonly) BOOL isLocal;
+@property (readonly) NSString *playerID;
 
 @end

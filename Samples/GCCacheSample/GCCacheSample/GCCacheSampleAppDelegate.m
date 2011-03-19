@@ -26,11 +26,7 @@
     [GCCache registerLeaderboards:[cacheDefaults objectForKey:@"Leaderboards"]];
     [GCCache registerAchievements:[cacheDefaults objectForKey:@"Achievements"]];
     
-    if ([self.window respondsToSelector:@selector(setRootViewController:)]) {
-        self.window.rootViewController = self.viewController;
-    } else {
-        [self.window addSubview:self.viewController.view];
-    }
+    [self.window insertSubview:self.viewController.view belowSubview:self.progressIndicator];
     [self.window makeKeyAndVisible];
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Block online"
