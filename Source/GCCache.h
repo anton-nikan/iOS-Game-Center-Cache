@@ -18,14 +18,15 @@
 + (void)registerAchievements:(NSArray*)achievements;
 + (void)registerLeaderboards:(NSArray*)leaderboards;
 
++ (GCCache*)authenticatedCache;
 + (GCCache*)activeCache;
 + (void)activateCache:(GCCache*)cache;
-+ (GCCache*)authenticatedCache;
 
 + (void)launchGameCenterWithCompletionTarget:(id)target action:(SEL)action;
 + (void)shutdown;
 
 - (BOOL)isEqualToProfile:(NSDictionary*)profileDict;
+- (BOOL)renameProfile:(NSString*)newName;
 
 - (BOOL)submitScore:(NSNumber*)score toLeaderboard:(NSString*)board;
 - (NSNumber*)scoreForLeaderboard:(NSString*)board;

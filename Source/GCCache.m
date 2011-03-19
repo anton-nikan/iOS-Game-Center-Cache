@@ -330,6 +330,48 @@ static NSArray *achievements_ = nil;
             (!thePlayerID || [thePlayerID isEqualToString:self.playerID])) ? YES : NO;
 }
 
+- (BOOL)renameProfile:(NSString*)newName
+{
+    // Checking profile name validity
+    if (!self.isLocal) return NO;
+    if (newName.length == 0) return NO;
+
+    NSRange charRange = [newName rangeOfCharacterFromSet:[NSCharacterSet lowercaseLetterCharacterSet]
+                                                 options:NSCaseInsensitiveSearch];
+    if (charRange.location == NSNotFound) {
+        return NO;
+    }
+    
+    NSMutableArray *allProfiles = [NSMutableArray arrayWithArray:[GCCache cachedProfiles]];
+    for (NSDictionary *profile in allProfiles) {
+        BOOL isLocal = [[profile valueForKey:@"IsLocal"] boolValue];
+        if (isLocal) {
+            NSString *name = [profile valueForKey:@"Name"];
+            if ([name isEqualToString:newName]) {
+                return NO;
+            }
+        }
+    }
+    
+    // Rewriting profile
+    for (int i = 0; i < allProfiles.count; ++i) {
+        NSDictionary *profile = [allProfiles objectAtIndex:i];
+        if ([self isEqualToProfile:profile]) {
+            [allProfiles removeObjectAtIndex:i];
+            break;
+        }
+    }
+    
+    [self.data setValue:newName forKey:@"Name"];
+    [allProfiles addObject:self.data];
+
+    [[NSUserDefaults standardUserDefaults] setObject:allProfiles forKey:kGCProfilesProperty];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    GCLOG(@"GCCache profile renamed to: %@.", self.profileName);
+    return YES;
+}
+
 - (void)save
 {
     NSMutableArray *allProfiles = [NSMutableArray arrayWithArray:

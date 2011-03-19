@@ -36,8 +36,52 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    self.bestScoreLabel.text = [NSString stringWithFormat:@"Best Score: %@",
-                                [[GCCache activeCache] scoreForLeaderboard:@"SimpleScore"]];
+    if (alertView.tag == 0) {
+        self.bestScoreLabel.text = [NSString stringWithFormat:@"Best Score: %@",
+                                    [[GCCache activeCache] scoreForLeaderboard:@"SimpleScore"]];
+
+        if ([[GCCache activeCache] isDefault]) {
+            // Suggest to name the profile
+            UIAlertView *profileAlert = [[UIAlertView alloc] initWithTitle:@"Enter your name:"
+                                                                   message:@"Placeholder text"
+                                                                  delegate:self
+                                                         cancelButtonTitle:@"Cancel"
+                                                         otherButtonTitles:@"Save", nil];
+            UITextField *theTextField = [[UITextField alloc] initWithFrame:CGRectMake(12.0, 47.0, 260.0, 25.0)]; 
+            [theTextField setBackgroundColor:[UIColor whiteColor]]; 
+            [profileAlert addSubview:theTextField];
+            profileAlert.tag = 1;
+            
+            [profileAlert show];
+        }
+    } else if (alertView.tag == 1) {
+        UITextField *textField = nil;
+        for (UIView *view in alertView.subviews) {
+            if ([view isKindOfClass:[UITextField class]]) {
+                textField = (UITextField*)view;
+                break;
+            }
+        }
+
+        if (textField && textField.text.length && alertView.cancelButtonIndex != buttonIndex) {
+            NSString *newProfileName = textField.text;
+            if (![[GCCache activeCache] renameProfile:newProfileName]) {
+                UIAlertView *profileAlert = [[UIAlertView alloc] initWithTitle:@"Name is not available. Please enter different name:"
+                                                                       message:@"Placeholder text"
+                                                                      delegate:self
+                                                             cancelButtonTitle:@"Cancel"
+                                                             otherButtonTitles:@"Save", nil];
+                UITextField *theTextField = [[UITextField alloc] initWithFrame:CGRectMake(12.0, 67.0, 260.0, 25.0)]; 
+                [theTextField setBackgroundColor:[UIColor whiteColor]]; 
+                [profileAlert addSubview:theTextField];
+                profileAlert.tag = 1;
+
+                [profileAlert show];
+            } else {
+                [self updateProfileInfo];
+            }
+        }
+    }
 
     [alertView release];
 }
@@ -124,7 +168,7 @@
     UIAlertView *resultAlert = [[UIAlertView alloc] initWithTitle:@"Game Finished"
                                                           message:msg
                                                          delegate:self
-                                                cancelButtonTitle:@"OK"
+                                                cancelButtonTitle:@"Ok"
                                                 otherButtonTitles:nil];
     [resultAlert show];
 
