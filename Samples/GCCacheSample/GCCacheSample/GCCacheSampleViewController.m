@@ -9,6 +9,7 @@
 #import "GCCacheSampleViewController.h"
 #import "GCCache.h"
 #import "LeaderboardViewController.h"
+#import "AchievementsViewController.h"
 
 
 @implementation GCCacheSampleViewController
@@ -215,6 +216,10 @@
             [self presentModalViewController: achievements animated: YES];
             [achievements release];
         }
+    } else {
+        AchievementsViewController *achievementsController = [[AchievementsViewController alloc] init];
+        [self presentModalViewController:achievementsController animated:YES];
+        [achievementsController release];
     }
 }
 

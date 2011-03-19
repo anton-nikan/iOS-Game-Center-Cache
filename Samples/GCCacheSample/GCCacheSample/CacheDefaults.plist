@@ -5,10 +5,10 @@
 	<key>Achievements</key>
 	<array>
 		<dict>
-			<key>ID</key>
-			<string>achievements.ach01</string>
 			<key>EarnedDescription</key>
 			<string>You&apos;ve earned the Achievement 01</string>
+			<key>ID</key>
+			<string>achievements.ach01</string>
 			<key>Image</key>
 			<string></string>
 			<key>IsHidden</key>
@@ -21,10 +21,10 @@
 			<string>Achievement 01</string>
 		</dict>
 		<dict>
-			<key>ID</key>
-			<string>achievements.ach02</string>
 			<key>EarnedDescription</key>
 			<string>You&apos;ve earned the Achievement 02</string>
+			<key>ID</key>
+			<string>achievements.ach02</string>
 			<key>Image</key>
 			<string></string>
 			<key>IsHidden</key>
@@ -37,14 +37,14 @@
 			<string>Achievement 02</string>
 		</dict>
 		<dict>
-			<key>ID</key>
-			<string>achievements.ach03</string>
 			<key>EarnedDescription</key>
 			<string>You&apos;ve earned the Achievement 03</string>
+			<key>ID</key>
+			<string>achievements.ach03</string>
 			<key>Image</key>
 			<string></string>
 			<key>IsHidden</key>
-			<false/>
+			<true/>
 			<key>Name</key>
 			<string>Ach-03</string>
 			<key>PreEarnedDescription</key>
@@ -53,10 +53,10 @@
 			<string>Achievement 03</string>
 		</dict>
 		<dict>
-			<key>ID</key>
-			<string>achievements.ach04</string>
 			<key>EarnedDescription</key>
 			<string>You&apos;ve earned the Achievement 04</string>
+			<key>ID</key>
+			<string>achievements.ach04</string>
 			<key>Image</key>
 			<string></string>
 			<key>IsHidden</key>
@@ -69,10 +69,10 @@
 			<string>Achievement 04</string>
 		</dict>
 		<dict>
-			<key>ID</key>
-			<string>achievements.ach05</string>
 			<key>EarnedDescription</key>
 			<string>You&apos;ve earned the Achievement 05</string>
+			<key>ID</key>
+			<string>achievements.ach05</string>
 			<key>Image</key>
 			<string></string>
 			<key>IsHidden</key>
@@ -88,10 +88,10 @@
 	<key>Leaderboards</key>
 	<array>
 		<dict>
-			<key>Name</key>
-			<string>SimpleScore</string>
 			<key>ID</key>
 			<string>leaderboards.simplescore</string>
+			<key>Name</key>
+			<string>SimpleScore</string>
 			<key>Order</key>
 			<string>Descending</string>
 		</dict>

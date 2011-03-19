@@ -20,6 +20,7 @@
 		F4725A51132F705200E7AE8C /* libGameCenterCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4725A50132F705200E7AE8C /* libGameCenterCache.a */; };
 		F477B8E11334B5320087F127 /* PlayerListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F477B8E01334B5320087F127 /* PlayerListViewController.m */; };
 		F477B8E41334E9F90087F127 /* LeaderboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F477B8E31334E9F90087F127 /* LeaderboardViewController.m */; };
+		F477B8E71334EEDB0087F127 /* AchievementsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F477B8E61334EEDB0087F127 /* AchievementsViewController.m */; };
 		F4A802881334B17600F7D8A0 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A802871334B17600F7D8A0 /* GameKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,8 @@
 		F477B8E01334B5320087F127 /* PlayerListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerListViewController.m; sourceTree = "<group>"; };
 		F477B8E21334E9F90087F127 /* LeaderboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaderboardViewController.h; sourceTree = "<group>"; };
 		F477B8E31334E9F90087F127 /* LeaderboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaderboardViewController.m; sourceTree = "<group>"; };
+		F477B8E51334EEDB0087F127 /* AchievementsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementsViewController.h; sourceTree = "<group>"; };
+		F477B8E61334EEDB0087F127 /* AchievementsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementsViewController.m; sourceTree = "<group>"; };
 		F4A802871334B17600F7D8A0 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -125,6 +128,8 @@
 				F477B8E01334B5320087F127 /* PlayerListViewController.m */,
 				F477B8E21334E9F90087F127 /* LeaderboardViewController.h */,
 				F477B8E31334E9F90087F127 /* LeaderboardViewController.m */,
+				F477B8E51334EEDB0087F127 /* AchievementsViewController.h */,
+				F477B8E61334EEDB0087F127 /* AchievementsViewController.m */,
 			);
 			path = GCCacheSample;
 			sourceTree = "<group>";
@@ -235,6 +240,7 @@
 				F4725A3C132F6C6B00E7AE8C /* GCCacheSampleViewController.m in Sources */,
 				F477B8E11334B5320087F127 /* PlayerListViewController.m in Sources */,
 				F477B8E41334E9F90087F127 /* LeaderboardViewController.m in Sources */,
+				F477B8E71334EEDB0087F127 /* AchievementsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
