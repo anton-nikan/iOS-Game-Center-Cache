@@ -56,6 +56,15 @@ static NSArray *achievements_ = nil;
 
 + (GCCache*)cacheForProfile:(NSDictionary*)profileDict
 {
+    // Returning instances if available
+    if (authenticatedCache_ && [authenticatedCache_ isEqualToProfile:profileDict]) {
+        return authenticatedCache_;
+    }
+    
+    if (activeCache_ && [activeCache_ isEqualToProfile:profileDict]) {
+        return activeCache_;
+    }
+    
     return [[[GCCache alloc] initWithDictionary:profileDict] autorelease];
 }
 
@@ -194,6 +203,7 @@ static NSArray *achievements_ = nil;
                 GCLOG(@"Player authentication had errors. Working locally.");
             } else {
                 GCLOG(@"Game Center launched.");
+                [GCCache activeCache].connected = YES;
             }
 
             [target performSelectorOnMainThread:action withObject:e waitUntilDone:NO];
@@ -295,6 +305,7 @@ static NSArray *achievements_ = nil;
     return (self.isLocal && [self.profileName isEqualToString:kGCDefaultProfileName]);
 }
 
+@synthesize connected;
 @synthesize data;
 
 
@@ -304,6 +315,7 @@ static NSArray *achievements_ = nil;
 {
     if ((self = [super init])) {
         self.data = [NSMutableDictionary dictionaryWithDictionary:profileDict];
+        self.connected = NO;
     }
     return self;
 }
@@ -311,7 +323,6 @@ static NSArray *achievements_ = nil;
 - (void)dealloc
 {
     [self save];
-
     self.data = nil;
     [super dealloc];
 }

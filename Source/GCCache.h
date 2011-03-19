@@ -47,5 +47,6 @@
 @property (readonly) BOOL isLocal;
 @property (readonly) NSString *playerID;
 @property (readonly) BOOL isDefault;
+@property (assign, getter = isConnected) BOOL connected;
 
 @end

@@ -190,7 +190,7 @@
 }
 
 - (IBAction)scoresAction {
-    if (![[GCCache activeCache] isLocal]) {
+    if ([[GCCache activeCache] isConnected]) {
         GKLeaderboardViewController *leaderboardController = [[GKLeaderboardViewController alloc] init];
         if (leaderboardController != nil)
         {
@@ -202,7 +202,7 @@
 }
 
 - (IBAction)achievementsAction {
-    if (![[GCCache activeCache] isLocal]) {
+    if ([[GCCache activeCache] isConnected]) {
         GKAchievementViewController *achievements = [[GKAchievementViewController alloc] init];
         if (achievements != nil)
         {
