@@ -11,6 +11,7 @@
 
 
 @implementation GCCacheSampleViewController
+@synthesize changePlayerButton;
 @synthesize playerLabel;
 @synthesize bestScoreLabel;
 
@@ -18,6 +19,7 @@
 {
     [playerLabel release];
     [bestScoreLabel release];
+    [changePlayerButton release];
     [super dealloc];
 }
 
@@ -40,6 +42,22 @@
     [alertView release];
 }
 
+- (void)playerListViewControllerDidCancel:(PlayerListViewController *)controller
+{
+    [self updateProfileInfo];
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)playerListViewController:(PlayerListViewController *)controller didSelectProfile:(NSDictionary *)profile
+{
+    if (![[GCCache activeCache] isEqualToProfile:profile]) {
+        GCCache *profileCache = [GCCache cacheForProfile:profile];
+        [GCCache activateCache:profileCache];
+    }
+
+    [self updateProfileInfo];
+    [self dismissModalViewControllerAnimated:YES];
+}
 
 #pragma mark - View lifecycle
 
@@ -56,6 +74,7 @@
 {
     [self setPlayerLabel:nil];
     [self setBestScoreLabel:nil];
+    [self setChangePlayerButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -112,7 +131,12 @@
     [[GCCache activeCache] submitScore:[NSNumber numberWithInt:score] toLeaderboard:@"SimpleScore"];
 }
 
-- (IBAction)changePlayerAction {
+- (IBAction)changePlayerAction
+{
+    PlayerListViewController *playerViewController = [[PlayerListViewController alloc] init];
+    playerViewController.delegate = self;
+    [self presentModalViewController:playerViewController animated:YES];
+    [playerViewController release];
 }
 
 - (IBAction)resetAction

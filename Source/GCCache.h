@@ -19,10 +19,13 @@
 + (void)registerLeaderboards:(NSArray*)leaderboards;
 
 + (GCCache*)activeCache;
-+ (void)setActiveCache:(GCCache*)cache;
++ (void)activateCache:(GCCache*)cache;
++ (GCCache*)authenticatedCache;
 
 + (void)launchGameCenterWithCompletionTarget:(id)target action:(SEL)action;
 + (void)shutdown;
+
+- (BOOL)isEqualToProfile:(NSDictionary*)profileDict;
 
 - (BOOL)submitScore:(NSNumber*)score toLeaderboard:(NSString*)board;
 - (NSNumber*)scoreForLeaderboard:(NSString*)board;
@@ -42,5 +45,6 @@
 @property (readonly) NSString *profileName;
 @property (readonly) BOOL isLocal;
 @property (readonly) NSString *playerID;
+@property (readonly) BOOL isDefault;
 
 @end

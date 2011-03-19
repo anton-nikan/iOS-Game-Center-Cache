@@ -43,6 +43,7 @@ static NSString *kGCDefaultProfileName = @"Default";
 @implementation GCCache
 
 static GCCache *activeCache_ = nil;
+static GCCache *authenticatedCache_ = nil;
 static NSArray *leaderboards_ = nil;
 static NSArray *achievements_ = nil;
 
@@ -88,17 +89,26 @@ static NSArray *achievements_ = nil;
     return activeCache_;
 }
 
-+ (void)setActiveCache:(GCCache*)cache
++ (void)activateCache:(GCCache*)cache
 {
     @synchronized(self) {
         if (activeCache_) {
+            [activeCache_ save];
             [activeCache_ release], activeCache_ = nil;
         }
         activeCache_ = [cache retain];
         
-        // Forcing sync for archived data
-        [activeCache_ synchronize];
+        if (activeCache_) {
+            GCLOG(@"Cache activated for profile: %@.", activeCache_.profileName);
+            // Forcing sync for archived data
+            [activeCache_ synchronize];
+        }
     }
+}
+
++ (GCCache*)authenticatedCache
+{
+    return authenticatedCache_;
 }
 
 + (void)registerAchievements:(NSArray*)achievements
@@ -137,7 +147,12 @@ static NSArray *achievements_ = nil;
                 NSNumber *local = [profile valueForKey:@"IsLocal"];
                 if (playerID && [playerID isEqualToString:[localPlayer playerID]] && ![local boolValue]) {
                     GCLOG(@"Player profile found in cache (%@). Switching to it.", [localPlayer playerID]);
-                    [GCCache setActiveCache:[GCCache cacheForProfile:profile]];
+                    
+                    GCCache *profileCache = [GCCache cacheForProfile:profile];
+                    [GCCache activateCache:profileCache];
+                    [authenticatedCache_ release];
+                    authenticatedCache_ = [profileCache retain];
+                    
                     profileFound = YES;
                     break;
                 }
@@ -149,7 +164,9 @@ static NSArray *achievements_ = nil;
                                                                          [localPlayer playerID], @"PlayerID",
                                                                          [NSNumber numberWithBool:NO], @"IsLocal",
                                                                          nil]];
-                [GCCache setActiveCache:newCache];
+                [GCCache activateCache:newCache];
+                [authenticatedCache_ release];
+                authenticatedCache_ = [newCache retain];
                 [newCache release];
                 
                 GCLOG(@"New profile created for Player (%@).", [localPlayer playerID]);
@@ -187,6 +204,7 @@ static NSArray *achievements_ = nil;
 + (void)shutdown
 {
     @synchronized(self) {
+        [authenticatedCache_ release], authenticatedCache_ = nil;
         [activeCache_ release], activeCache_ = nil;
         [leaderboards_ release], leaderboards_ = nil;
         [achievements_ release], achievements_ = nil;
@@ -278,6 +296,11 @@ static NSArray *achievements_ = nil;
     }
 }
 
+- (BOOL)isDefault
+{
+    return (self.isLocal && [self.profileName isEqualToString:kGCDefaultProfileName]);
+}
+
 @synthesize data;
 
 
@@ -310,7 +333,7 @@ static NSArray *achievements_ = nil;
     
     return ([theName isEqualToString:self.profileName] &&
             theIsLocal == self.isLocal &&
-            [thePlayerID isEqualToString:self.playerID]) ? YES : NO;
+            (!thePlayerID || [thePlayerID isEqualToString:self.playerID])) ? YES : NO;
 }
 
 - (void)save
@@ -339,7 +362,7 @@ static NSArray *achievements_ = nil;
     [[NSUserDefaults standardUserDefaults] setObject:allProfiles forKey:kGCProfilesProperty];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
-    GCLOG(@"GCCache saved.");
+    GCLOG(@"GCCache saved for profile: %@.", self.profileName);
 }
 
 - (void)synchronize

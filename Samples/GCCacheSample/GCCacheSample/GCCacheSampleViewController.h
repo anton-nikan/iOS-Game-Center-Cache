@@ -8,14 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import <GameKit/GameKit.h>
+#import "PlayerListViewController.h"
+
 
 @interface GCCacheSampleViewController : UIViewController
-    <UIAlertViewDelegate, GKLeaderboardViewControllerDelegate, GKAchievementViewControllerDelegate>
+    <UIAlertViewDelegate, GKLeaderboardViewControllerDelegate, GKAchievementViewControllerDelegate,
+    PlayerListViewControllerDelegate>
 {
     UILabel *playerLabel;
     UILabel *bestScoreLabel;
+    UIButton *changePlayerButton;
 }
 
+@property (nonatomic, retain) IBOutlet UIButton *changePlayerButton;
 @property (nonatomic, retain) IBOutlet UILabel *playerLabel;
 @property (nonatomic, retain) IBOutlet UILabel *bestScoreLabel;
 

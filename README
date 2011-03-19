@@ -17,7 +17,7 @@ Samples:
 	- GCCacheSample: typical game scenario. Demonstrates all functionality for storing user profiles with scores and achievements locally and online.
 
 Notes:
-	- To allow GameCenterCache running on pre-4.1 iOS, GameKit should be linked weakly: add "-weak_framework GameKit" to the Other Linker Flags build setting.
+	- To allow GameCenterCache running on pre-4.1 iOS, GameKit should be linked weakly (set Target Membership to Optional).
 
 
 Copyright (C) 2011 by Anton Nikolaienko.
