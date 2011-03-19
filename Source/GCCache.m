@@ -78,7 +78,7 @@ static NSArray *achievements_ = nil;
                                                                     kGCDefaultProfileName, @"Name",
                                                                     [NSNumber numberWithBool:YES], @"IsLocal",
                                                                     nil]];
-                [activeCache_ synchronize];
+                [activeCache_ save];
                 GCLOG(@"New Default profile created.");
             }
         }
@@ -125,7 +125,7 @@ static NSArray *achievements_ = nil;
     [localPlayer authenticateWithCompletionHandler:^(NSError *e) {
         if (localPlayer.isAuthenticated)
         {
-            GCLOG(@"Local Player authenticated (%@).", [localPlayer alias]);
+            GCLOG(@"Player authenticated (%@).", [localPlayer alias]);
 
             // Looking for player profile in cached
             BOOL profileFound = NO;
@@ -172,7 +172,7 @@ static NSArray *achievements_ = nil;
     } else {
         [GCCache authenticateLocalPlayerWithCompletionHandler:^(NSError *e) {
             if (e) {
-                GCLOG(@"Local Player authentication had errors. Working locally.");
+                GCLOG(@"Player authentication had errors. Working locally.");
             } else {
                 GCLOG(@"Game Center launched.");
             }
@@ -280,7 +280,7 @@ static NSArray *achievements_ = nil;
 
 - (void)dealloc
 {
-    [self synchronize];
+    [self save];
 
     self.data = nil;
     [super dealloc];
@@ -297,7 +297,7 @@ static NSArray *achievements_ = nil;
     return ([theName isEqualToString:self.profileName] && theIsLocal == self.isLocal) ? YES : NO;
 }
 
-- (void)synchronize
+- (void)save
 {
     NSMutableArray *allProfiles = [NSMutableArray arrayWithArray:
                                    [[NSUserDefaults standardUserDefaults] arrayForKey:kGCProfilesProperty]];
@@ -318,17 +318,20 @@ static NSArray *achievements_ = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:allProfiles forKey:kGCProfilesProperty];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
+
+    GCLOG(@"GCCache saved.");
+}
+
+- (void)synchronize
+{
     // Sending out archived data
     if (!self.isLocal) {
         NSArray *archive = [self.data objectForKey:@"Archive"];
         if (archive) {
-            GCLOG(@"Sending archieved data to Game Center...");
+            GCLOG(@"Sending archieved data to Game Center (%d)...", archive.count);
             [self submitArchivedData];
         }
     }
-    
-    GCLOG(@"GCCache synchronized.");
 }
 
 - (void)reset
@@ -362,19 +365,6 @@ static NSArray *achievements_ = nil;
         return NO;
     }
 
-    NSMutableDictionary *scoreDict = [NSMutableDictionary dictionaryWithDictionary:[self.data objectForKey:@"Scores"]];
-    NSNumber *currScore = [scoreDict valueForKey:board];    
-    if (currScore && ![GCCache isBetterScore:score
-                                   thanScore:currScore
-                                     inOrder:[leaderboard valueForKey:@"Order"]])
-    {
-        return NO;
-    }
-
-    // Rewriting current score
-    [scoreDict setValue:score forKey:board];
-    [self.data setObject:scoreDict forKey:@"Scores"];
-    
     if (!self.isLocal) {
         GKScore *newScore = [[GKScore alloc] initWithCategory:[leaderboard valueForKey:@"ID"]];
         newScore.value = [score integerValue];
@@ -389,6 +379,19 @@ static NSArray *achievements_ = nil;
         
         [newScore autorelease];
     }
+
+    NSMutableDictionary *scoreDict = [NSMutableDictionary dictionaryWithDictionary:[self.data objectForKey:@"Scores"]];
+    NSNumber *currScore = [scoreDict valueForKey:board];    
+    if (currScore && ![GCCache isBetterScore:score
+                                   thanScore:currScore
+                                     inOrder:[leaderboard valueForKey:@"Order"]])
+    {
+        return NO;
+    }
+
+    // Rewriting current score
+    [scoreDict setValue:score forKey:board];
+    [self.data setObject:scoreDict forKey:@"Scores"];
     
     GCLOG(@"Score %@ for '%@' leaderboard updated.", score, board);
     

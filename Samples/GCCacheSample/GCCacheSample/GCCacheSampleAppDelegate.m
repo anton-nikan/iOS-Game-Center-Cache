@@ -26,6 +26,12 @@
     [GCCache registerLeaderboards:[cacheDefaults objectForKey:@"Leaderboards"]];
     [GCCache registerAchievements:[cacheDefaults objectForKey:@"Achievements"]];
     
+    if ([self.window respondsToSelector:@selector(setRootViewController:)]) {
+        self.window.rootViewController = self.viewController;
+    } else {
+        [self.window addSubview:self.viewController.view];
+    }
+    [self.window makeKeyAndVisible];
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Block online"
                                                     message:@"Do you want to test the app offline-only?"
@@ -42,13 +48,6 @@
     if (e) {
         NSLog(@"Error launching GameCenter: %@", e.localizedDescription);
     }
-    
-    if ([self.window respondsToSelector:@selector(setRootViewController:)]) {
-        self.window.rootViewController = self.viewController;
-    } else {
-        [self.window addSubview:self.viewController.view];
-    }
-    [self.window makeKeyAndVisible];
     
     [self.progressIndicator stopAnimating];
     [self.viewController updateProfileInfo];
@@ -73,7 +72,7 @@
      Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
      */
     
-    [[GCCache activeCache] synchronize];
+    [[GCCache activeCache] save];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -96,6 +95,8 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+
+    [[GCCache activeCache] synchronize];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

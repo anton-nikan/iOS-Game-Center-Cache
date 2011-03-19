@@ -34,6 +34,7 @@
 - (double)progressOfAchievement:(NSString*)achievement;
 - (NSDictionary*)allAchievements;
 
+- (void)save;
 - (void)synchronize;
 - (void)reset;
 
