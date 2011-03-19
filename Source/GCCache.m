@@ -453,6 +453,7 @@ static NSArray *achievements_ = nil;
     }
 
     GCLOG(@"GCCache reset.");
+    [self save];
 }
 
 #pragma mark - Public routines: Scores
@@ -494,6 +495,7 @@ static NSArray *achievements_ = nil;
     [self.data setObject:scoreDict forKey:@"Scores"];
     
     GCLOG(@"Score %@ for '%@' leaderboard updated.", score, board);
+    [self save];
     
     return YES;
 }
@@ -547,6 +549,7 @@ static NSArray *achievements_ = nil;
     }
     
     GCLOG(@"Achievement '%@' unlocked.", achievement);
+    [self save];
 
     return YES;
 }
@@ -607,6 +610,7 @@ static NSArray *achievements_ = nil;
     } else {
         GCLOG(@"Achievement '%@' updated to progress %f.", achievement, progress);
     }
+    [self save];
     
     return YES;
 }

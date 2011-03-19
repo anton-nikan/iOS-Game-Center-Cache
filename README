@@ -1,23 +1,25 @@
 iOS Game Center Cache
 
-Current version: 0.1.1 emerging.
+Current version: 0.1 alpha.
 
 Purpose:
 	- Work as weakly connected proxy to the Game Center.
 	- Provide functionality to work with user scores, achievements and any other related data in both online/offline and with multiple user profiles.
 
 Public classes:
-	- 
+	- GCCache: main cache class with all routines needed.
 
 Features:
-	- 
-	- 
+	- Complete solution for storing scores and achievements.
+	- Multiple user profiles, profile switching, local/online profiles.
+	- Connection to Game Center if available.
+	- Weak GameKit linkage; on pre-4.1 versions works locally (see the Sample).
+	- Archiving of failed score/achievements submissions; resubmission when connected to Game Center.
+	- Default profile when no any selected.
+	- Progress reset.
 	
 Samples:
-	- GCCacheSample: typical game scenario. Demonstrates all functionality for storing user profiles with scores and achievements locally and online.
-
-Notes:
-	- To allow GameCenterCache running on pre-4.1 iOS, GameKit should be linked weakly (set Target Membership to Optional).
+	- GCCacheSample: typical game scenario. Demonstrates all functionality of having multiple user profiles with scores and achievements locally and online.
 
 
 Copyright (C) 2011 by Anton Nikolaienko.
