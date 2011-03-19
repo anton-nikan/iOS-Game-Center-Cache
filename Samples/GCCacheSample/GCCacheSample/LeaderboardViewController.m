@@ -1,17 +1,15 @@
 //
-//  PlayerListViewController.m
+//  LeaderboardViewController.m
 //  GCCacheSample
 //
 //  Created by nikan on 3/19/11.
 //  Copyright 2011 Anton Nikolaienko. All rights reserved.
 //
 
-#import "PlayerListViewController.h"
+#import "LeaderboardViewController.h"
 
 
-@implementation PlayerListViewController
-
-@synthesize delegate;
+@implementation LeaderboardViewController
 
 - (id)init
 {
@@ -29,8 +27,6 @@
                 [onlinePlayers addObject:profile];
             }
         }
-        
-        authenticating = NO;
     }
     return self;
 }
@@ -122,11 +118,7 @@
     if (section == 0) {
         return localPlayers.count;
     } else if (section == 1) {
-        if (![GCCache authenticatedCache]) {
-            return onlinePlayers.count + 1;
-        } else {
-            return onlinePlayers.count;
-        }
+        return onlinePlayers.count;
     }
     
     return 1;
@@ -136,34 +128,19 @@
 {
     static NSString *CellIdentifier = @"Cell";
     static NSString *CancelButtonCellIdentifier = @"CancelButtonCell";
-    static NSString *AuthButtonCellIdentifier = @"AuthButtonCell";
     
     UITableViewCell *cell = nil;
     if (indexPath.section == 2) {
         cell = [tableView dequeueReusableCellWithIdentifier:CancelButtonCellIdentifier];
         if (cell == nil) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CancelButtonCellIdentifier] autorelease];
-            cell.textLabel.text = @"Cancel";
+            cell.textLabel.text = @"Done";
             cell.textLabel.textAlignment = UITextAlignmentCenter;
-        }
-    } else if (indexPath.section == 1 && indexPath.row == onlinePlayers.count) {
-        cell = [tableView dequeueReusableCellWithIdentifier:AuthButtonCellIdentifier];
-        if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AuthButtonCellIdentifier] autorelease];
-            cell.textLabel.textAlignment = UITextAlignmentCenter;
-        }
-        
-        if (authenticating) {
-            cell.textLabel.text = @"Authenticating...";
-            cell.textLabel.enabled = NO;
-        } else {
-            cell.textLabel.text = @"Authenticate";
-            cell.textLabel.enabled = YES;
         }
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
         }
         
         // Configure the cell
@@ -172,19 +149,25 @@
             profile = [localPlayers objectAtIndex:indexPath.row];
         } else if (indexPath.section == 1) {
             profile = [onlinePlayers objectAtIndex:indexPath.row];
-            if ([[GCCache authenticatedCache] isEqualToProfile:profile]) {
-                cell.textLabel.enabled = YES;
-            } else {
-                cell.textLabel.enabled = NO;
-            }
         }
         
         if (profile) {
             cell.textLabel.text = [profile valueForKey:@"Name"];
-            if ([[GCCache activeCache] isEqualToProfile:profile]) {
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            
+            NSDictionary *scores = [profile valueForKey:@"Scores"];
+            if (scores) {
+                // TODO: make score tables for all leaderboards
+                NSString *leaderboard = [[scores allKeys] objectAtIndex:0];
+                NSNumber *score = [scores valueForKey:leaderboard];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", score];
             } else {
-                cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.detailTextLabel.text = @"0";
+            }
+            
+            if ([[GCCache activeCache] isEqualToProfile:profile]) {
+                cell.textLabel.textColor = [UIColor blueColor];
+            } else {
+                cell.textLabel.textColor = [UIColor blackColor];
             }
         }
     }
@@ -231,51 +214,20 @@
 }
 */
 
-#pragma mark -
-
-- (void)doneAuthenticatingWithError:(NSError*)error
-{
-    authenticating = NO;
-    [self.tableView reloadData];
-}
-
 #pragma mark - Table view delegate
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1) {
-        if (indexPath.row == onlinePlayers.count) {     // auth button
-            if (!authenticating) {
-                return indexPath;
-            }
-        } else if ([[GCCache authenticatedCache] isEqualToProfile:[onlinePlayers objectAtIndex:indexPath.row]])
-        {
-            return indexPath;
-        }
-
-        return nil;
+    if (indexPath.section == 2) {
+        return indexPath;
     }
     
-    return indexPath;
+    return nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    if (indexPath.section == 2) {
-        [self.delegate playerListViewControllerDidCancel:self];
-    } else if (indexPath.section == 0) {
-        NSDictionary *profile = [localPlayers objectAtIndex:indexPath.row];
-        [self.delegate playerListViewController:self didSelectProfile:profile];
-    } else if (indexPath.section == 1 && indexPath.row < onlinePlayers.count) {
-        NSDictionary *profile = [onlinePlayers objectAtIndex:indexPath.row];
-        [self.delegate playerListViewController:self didSelectProfile:profile];
-    } else if (indexPath.section == 1 && indexPath.row == onlinePlayers.count) {
-        authenticating = YES;
-        [self.tableView reloadData];
-        [GCCache launchGameCenterWithCompletionTarget:self action:@selector(doneAuthenticatingWithError:)];
-    }
+    [self.parentViewController dismissModalViewControllerAnimated:YES];
 }
 
 @end

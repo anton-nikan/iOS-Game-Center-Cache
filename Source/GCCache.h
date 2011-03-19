@@ -15,7 +15,11 @@
 
 + (NSArray*)cachedProfiles;
 + (GCCache*)cacheForProfile:(NSDictionary*)profileDict;
+
++ (NSArray*)registeredAchievements;
 + (void)registerAchievements:(NSArray*)achievements;
+
++ (NSArray*)registeredLeaderboards;
 + (void)registerLeaderboards:(NSArray*)leaderboards;
 
 + (GCCache*)authenticatedCache;

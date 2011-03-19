@@ -8,6 +8,7 @@
 
 #import "GCCacheSampleViewController.h"
 #import "GCCache.h"
+#import "LeaderboardViewController.h"
 
 
 @implementation GCCacheSampleViewController
@@ -198,6 +199,10 @@
             [self presentModalViewController: leaderboardController animated: YES];
             [leaderboardController release];
         }
+    } else {
+        LeaderboardViewController *leaderboardController = [[LeaderboardViewController alloc] init];
+        [self presentModalViewController:leaderboardController animated:YES];
+        [leaderboardController release];
     }
 }
 

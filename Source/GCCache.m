@@ -120,6 +120,11 @@ static NSArray *achievements_ = nil;
     return authenticatedCache_;
 }
 
++ (NSArray*)registeredAchievements
+{
+    return achievements_;
+}
+
 + (void)registerAchievements:(NSArray*)achievements
 {
     @synchronized(self) {
@@ -128,6 +133,11 @@ static NSArray *achievements_ = nil;
         }
         achievements_ = [achievements retain];
     }
+}
+
++ (NSArray*)registeredLeaderboards
+{
+    return leaderboards_;
 }
 
 + (void)registerLeaderboards:(NSArray*)leaderboards
